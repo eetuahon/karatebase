@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>Current info</p>
+  <table>
+    <tr>
+      <th>Topic</th>
+      <th>id</th>
+      <th></th>
+    </tr>
+
+    <tr>
+      <td>{{ topics.desc }}</td>
+      <td>{{ topics.id }}</td>
+      <td>
+      </td>
+    </tr>
+    
+
+  </table>
+  <p>Edit</p>
+
+  <form method="POST" action="{{ url_for('mod_topics') }}">
+    <input type="text" name="desc"/>
+    <input name="id" value={{topics.id}}/>
+    <input type="submit" value="Change"/>
+  </form>
+
+{% endblock %}

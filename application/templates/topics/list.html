@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Topic</th>
+      <th>id</th>
+      <th></th>
+    </tr>
+    {% for t in topics %}
+    <tr>
+      <td>{{ t.desc }}</td>
+      <td>{{ t.id }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('edit_topics', id=t.id) }}">
+          <input type="submit" value="Edit"/>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

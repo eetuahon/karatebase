@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Logon</th>
+      <th>id</th>
+    </tr>
+    {% for s in senseis %}
+    <tr>
+      <td>{{ s.name }}</td>
+      <td>{{ s.logon }}</td>
+      <td>{{ s.id }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

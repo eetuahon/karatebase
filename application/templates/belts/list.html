@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Belt</th>
+      <th>id</th>
+      <th></th>
+    </tr>
+    {% for belt in belts %}
+    <tr>
+      <td>{{ belt.belt }}</td>
+      <td>{{ belt.id }}</td>
+      <td>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
