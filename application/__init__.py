@@ -13,6 +13,7 @@ from application import models
 from application.belts import views
 from application.senseis import views
 from application.topics import views
+from application.events import views
 
 db.create_all()
 

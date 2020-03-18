@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>Current info</p>
+  <table>
+    <tr>
+      <th>Sensei</th>
+      <th>logon</th>
+      <th>id</th>
+    </tr>
+
+    <tr>
+      <td>{{ senseis.name }}</td>
+      <td>{{ senseis.logon }}</td>
+      <td>{{ senseis.id }}
+      </td>
+    </tr>
+    
+
+  </table>
+  <p>Edit</p>
+
+
+  <p>Do you wish to delete this sensei? You cannot undo this!</p>
+  <form method="POST" action="{{ url_for('senseis_del', id=senseis.id) }}">
+    <input type="hidden" name="id" value={{ senseis.id }}/>
+    <input type="submit" value="Delete"/>
+  </form>
+
+{% endblock %}

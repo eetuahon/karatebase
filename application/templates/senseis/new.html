@@ -2,7 +2,9 @@
   
 {% block body %}
 <form method="POST" action="{{ url_for('senseis_create') }}">
+  <label for="name">Name:</label>
   <input type="text" name="name"/>
+  <label for="logon">Logon:</label>
   <input type="text" name="logon"/>
   <input type="submit" value="Add a new sensei"/>
 </form>

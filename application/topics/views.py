@@ -24,20 +24,20 @@ def edit_topics(id):
     return render_template("topics/edit.html", topics = Topics.query.get(id))
 
 @app.route("/topics/", methods=["POST"])
-def mod_topics():
+def mod_topics(id):
     descr = request.form.get("desc")
-    id = request.form.get("id")
-    if not descr:
+    if len(descr) == 0:
         return redirect(url_for("topics_index"))
     else:
-        t = Topics(request.form.get(id))
+        #t = Topics(request.form.get(id))
+        t = Topics.query.get(id)
         t.desc = descr
         db.session().commit()
         return redirect(url_for("topics_index"))
 
-@app.route("/topics/", methods=["POST"])
-def topics_del():
-    t = Topics(Topics.query.get("id"))
+@app.route("/topics/del/<id>", methods=["POST"])
+def topics_del(id):
+    t = Topics.query.get(id)
 
     db.session().delete(t)
     db.session().commit()

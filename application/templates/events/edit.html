@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>Current info</p>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Date & time</th>
+      <th>Info</th>
+      <th>id</th>
+    </tr>
+
+    <tr>
+      <td>{{ events.name }}</td>
+      <td>{{ events.day }} {{ events.time }}</td>
+      <td>{{ events.info }}</td>
+      <td>{{ events.id }}</td>
+    </tr>
+    
+
+  </table>
+  <p>Edit</p>
+
+
+  <p>Do you wish to delete this event? You cannot undo this!</p>
+  <form method="POST" action="{{ url_for('events_del', id=events.id) }}">
+    <input type="hidden" name="id" value={{ events.id }}/>
+    <input type="submit" value="Delete"/>
+  </form>
+
+{% endblock %}

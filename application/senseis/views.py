@@ -18,3 +18,28 @@ def senseis_create():
     db.session().commit()
   
     return redirect(url_for("senseis_index"))
+
+
+@app.route("/senseis/<id>", methods=["POST"])
+def edit_senseis(id):
+    return render_template("senseis/edit.html", senseis = Senseis.query.get(id))
+
+@app.route("/senseis/", methods=["POST"])
+def mod_sensei(id):
+    name = request.form.get("name")
+    if len(name) == 0:
+        return redirect(url_for("seneis_index"))
+    else:
+        s = Senseis.query.get(id)
+        s.name = name
+        db.session().commit()
+        return redirect(url_for("senseis_index"))
+
+@app.route("/senseis/del/<id>", methods=["POST"])
+def senseis_del(id):
+    t = Senseis.query.get(id)
+
+    db.session().delete(t)
+    db.session().commit()
+  
+    return redirect(url_for("senseis_index"))

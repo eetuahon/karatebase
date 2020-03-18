@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<p>Current info</p>
+  <table>
+    <tr>
+      <th>Belt</th>
+      <th>id</th>
+      <th></th>
+    </tr>
+
+    <tr>
+      <td>{{ belts.belt }}</td>
+      <td>{{ belts.id }}</td>
+      <td>
+      </td>
+    </tr>
+    
+
+  </table>
+  <p>Edit</p>
+<!--
+  <form method="POST" action="{{ url_for('mod_belts', id=belts.id) }}">
+    <label for="desc">New description:</label>
+    <input type="text" name="desc"/>
+    <input type="hidden" name="id" value="{{ belts.id }}"/>
+    <input type="submit" value="Change"/>
+  </form>
+-->
+  <p>Do you wish to delete the belt? You cannot undo this!</p>
+  <form method="POST" action="{{ url_for('belts_del', id=belts.id) }}">
+    <input type="hidden" name="id" value={{ belts.id }}/>
+    <input type="submit" value="Delete"/>
+  </form>
+
+{% endblock %}
