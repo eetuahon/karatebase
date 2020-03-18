@@ -21,9 +21,16 @@
   <p>Edit</p>
 
   <form method="POST" action="{{ url_for('mod_topics') }}">
+    <label for="desc">New description:</label>
     <input type="text" name="desc"/>
-    <input name="id" value={{topics.id}}/>
+    <input type="hidden" name="id" value="{{ topics.id }}"/>
     <input type="submit" value="Change"/>
+  </form>
+
+  <p>Do you wish to delete the description? You cannot undo this!</p>
+  <form method="POST" action="{{ url_for('topics_del') }}">
+    <input type="hidden" name="id" value="{{ topics.id }}"/>
+    <input type="submit" value="Delete"/>
   </form>
 
 {% endblock %}

@@ -27,11 +27,19 @@ def edit_topics(id):
 def mod_topics():
     descr = request.form.get("desc")
     id = request.form.get("id")
-    if not desc:
+    if not descr:
         return redirect(url_for("topics_index"))
     else:
-        t = Topics.form.get(id)
-        #t.descr = desc
-        settattr(t, 'desc', descr)
+        t = Topics(request.form.get(id))
+        t.desc = descr
         db.session().commit()
         return redirect(url_for("topics_index"))
+
+@app.route("/topics/", methods=["POST"])
+def topics_del():
+    t = Topics(Topics.query.get("id"))
+
+    db.session().delete(t)
+    db.session().commit()
+  
+    return redirect(url_for("topics_index"))
