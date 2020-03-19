@@ -20,7 +20,18 @@
 
   </table>
   <p>Edit</p>
-
+  <form method="POST" action="{{ url_for('mod_events', id=events.id) }}">
+    <label for="name">Name:</label>
+  <input type="text" name="name"/>
+  <label for="day">Day:</label>
+  <input type="text" name="day"/>
+  <label for="time">Time:</label>
+  <input type="text" name="time"/>
+  <label for="info">Info:</label>
+  <input type="text" name="info"/>
+    <input type="hidden" name="id" value="{{ events.id }}"/>
+    <input type="submit" value="Change"/>
+  </form>
 
   <p>Do you wish to delete this event? You cannot undo this!</p>
   <form method="POST" action="{{ url_for('events_del', id=events.id) }}">

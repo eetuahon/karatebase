@@ -19,21 +19,27 @@ def events_create():
   
     return redirect(url_for("events_index"))
 
-
 @app.route("/events/<id>", methods=["POST"])
 def edit_events(id):
     return render_template("events/edit.html", events = Events.query.get(id))
 
-@app.route("/events/", methods=["POST"])
+@app.route("/events/ed/<id>", methods=["POST"])
 def mod_events(id):
     name = request.form.get("name")
-    if len(name) == 0:
-        return redirect(url_for("seneis_index"))
-    else:
-        s = Events.query.get(id)
-        s.name = name
-        db.session().commit()
-        return redirect(url_for("events_index"))
+    d = request.form.get("day")
+    t = request.form.get("time")
+    i = request.form.get("info")
+    e = Events.query.get(id)
+    if len(name) > 0:
+        e.name = name
+    if len(d) > 0:
+        e.day = d
+    if len(t) > 0:
+        e.time = t
+    if len(i) > 0:
+        e.info = i
+    db.session().commit()
+    return redirect(url_for("events_index"))
 
 @app.route("/events/del/<id>", methods=["POST"])
 def events_del(id):

@@ -19,15 +19,10 @@
 
   </table>
   <p>Edit</p>
-<!--
-  <form method="POST" action="{{ url_for('mod_belts', id=belts.id) }}">
-    <label for="desc">New description:</label>
-    <input type="text" name="desc"/>
-    <input type="hidden" name="id" value="{{ belts.id }}"/>
-    <input type="submit" value="Change"/>
-  </form>
--->
-  <p>Do you wish to delete the belt? You cannot undo this!</p>
+<p>Unlike other items, you are not supposed to edit a belt. If there is a typo, please delete
+  the belt and add a new one.
+</p>
+  <p>Do you wish to delete this belt? You cannot undo this!</p>
   <form method="POST" action="{{ url_for('belts_del', id=belts.id) }}">
     <input type="hidden" name="id" value={{ belts.id }}/>
     <input type="submit" value="Delete"/>

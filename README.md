@@ -1,5 +1,7 @@
 # Karateseura Verinyrkki ry:n harjoituskanta
 
+Tarkempaa dokumentaatiota ohjelman toimivuudesta päivitetään osissa kansioon [/documentation](https://github.com/eetuahon/karatebase/tree/master/documentation).
+
 Karateseura Verinyrkki ry järjestää karatetunteja, jotka voivat olla suunnattu yhdelle tai useammalle vyöarvolle. Jokaisen tunnin vetää yksi tai useampi sensei. Seinseit voivat luoda tunteja ja niihin liittyviä vöitä, aiheita ja muita senseitä. Karateseuran järjestelmä toimii samalla periaatteella kuin ircin opit eli kaikki ovat vastuussa kaikesta.
 
 Ominaisuuksia:

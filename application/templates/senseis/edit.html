@@ -19,7 +19,14 @@
 
   </table>
   <p>Edit</p>
-
+  <form method="POST" action="{{ url_for('mod_senseis', id=senseis.id) }}">
+    <label for="name">New name:</label>
+    <input type="text" name="name"/>
+    <label for="logon">New logon:</label>
+    <input type="text" name="logon"/>
+    <input type="hidden" name="id" value="{{ senseis.id }}"/>
+    <input type="submit" value="Change"/>
+  </form>
 
   <p>Do you wish to delete this sensei? You cannot undo this!</p>
   <form method="POST" action="{{ url_for('senseis_del', id=senseis.id) }}">

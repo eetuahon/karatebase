@@ -23,13 +23,12 @@ def topics_create():
 def edit_topics(id):
     return render_template("topics/edit.html", topics = Topics.query.get(id))
 
-@app.route("/topics/", methods=["POST"])
+@app.route("/topics/ed/<id>", methods=["POST"])
 def mod_topics(id):
     descr = request.form.get("desc")
     if len(descr) == 0:
         return redirect(url_for("topics_index"))
     else:
-        #t = Topics(request.form.get(id))
         t = Topics.query.get(id)
         t.desc = descr
         db.session().commit()

@@ -16,7 +16,7 @@ class Belts(db.Model):
 
 class Senseis(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, unique=True, nullable=True)
+    name = db.Column(db.Text, nullable=True)
     logon = db.Column(db.Text, unique=True, nullable=True)
 
     def __init__(self, name, logon):
