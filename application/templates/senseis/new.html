@@ -2,10 +2,27 @@
   
 {% block body %}
 <form method="POST" action="{{ url_for('senseis_create') }}">
-  <label for="name">Name:</label>
-  <input type="text" name="name"/>
-  <label for="logon">Logon:</label>
-  <input type="text" name="logon"/>
+  <table>
+    <tr>
+<td>
+  {{ form.name.label }}
+</td>
+<td>
+  {{ form.name }}
+</td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.logon.label }}
+      </td>
+      <td>
+        {{ form.logon }}
+      </td>
+          </tr>
+    <tr>
+<td colspan="2">
   <input type="submit" value="Add a new sensei"/>
+</td>
+    </tr>
 </form>
 {% endblock %}

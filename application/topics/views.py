@@ -1,6 +1,7 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.models import Topics
+from application.forms import TopicForm
 
 @app.route("/topics", methods=["GET"])
 def topics_index():
@@ -8,12 +9,16 @@ def topics_index():
 
 @app.route("/topics/new/")
 def topics_form():
-    return render_template("topics/new.html")
+    return render_template("topics/new.html", form = TopicForm())
 
 @app.route("/topics/", methods=["POST"])
 def topics_create():
-    t = Topics(request.form.get("desc"))
+    form = TopicForm(request.form)
 
+    if not form.validate():
+        return render_template("topics/new.html", form = form)
+
+    t = Topics(form.desc.data.lower())
     db.session().add(t)
     db.session().commit()
   
@@ -25,7 +30,8 @@ def edit_topics(id):
 
 @app.route("/topics/ed/<id>", methods=["POST"])
 def mod_topics(id):
-    descr = request.form.get("desc")
+    form = TopicForm(request.form)
+    descr = form.desc.data.lower()
     if len(descr) == 0:
         return redirect(url_for("topics_index"))
     else:

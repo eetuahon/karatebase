@@ -8,14 +8,10 @@
     <body>
       <ul>
         <li><a href="{{ url_for('index') }}">Home</a></li>
-  <li><a href="{{ url_for('senseis_index') }}">List senseis</a></li>
-  <li><a href="{{ url_for('senseis_form') }}">Add a sensei</a></li>
-	<li><a href="{{ url_for('belts_index') }}">List belts</a></li>
-  <li><a href="{{ url_for('belts_form') }}">Add a belt</a></li>
-  <li><a href="{{ url_for('topics_index') }}">List topics</a></li>
-  <li><a href="{{ url_for('topics_form') }}">Add a topic</a></li>
-  <li><a href="{{ url_for('events_index') }}">List events</a></li>
-  <li><a href="{{ url_for('events_form') }}">Add an event</a></li>
+  <li><a href="{{ url_for('senseis_index') }}">Senseis</a></li>
+	<li><a href="{{ url_for('belts_index') }}">Belts</a></li>
+  <li><a href="{{ url_for('topics_index') }}">Topics</a></li>
+  <li><a href="{{ url_for('events_index') }}">Events</a></li>
       </ul>
       
       {% block body %}

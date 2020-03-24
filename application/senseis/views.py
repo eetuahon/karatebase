@@ -1,6 +1,7 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.models import Senseis
+from application.forms import SenseiForm
 
 @app.route("/senseis", methods=["GET"])
 def senseis_index():
@@ -8,13 +9,13 @@ def senseis_index():
 
 @app.route("/senseis/new/")
 def senseis_form():
-    return render_template("senseis/new.html")
+    return render_template("senseis/new.html", form = SenseiForm())
 
 @app.route("/senseis/", methods=["POST"])
 def senseis_create():
-    t = Senseis(request.form.get("name"), request.form.get("logon"))
-
-    db.session().add(t)
+    form = SenseiForm(request.form)
+    s = Senseis(form.name.data, form.logon.data)
+    db.session().add(s)
     db.session().commit()
   
     return redirect(url_for("senseis_index"))
@@ -26,8 +27,9 @@ def edit_senseis(id):
 
 @app.route("/senseis/ed/<id>", methods=["POST"])
 def mod_senseis(id):
-    name = request.form.get("name")
-    l = request.form.get("logon")
+    form = SenseiForm(request.form)
+    name = form.name.data
+    l = form.logon.data
     s = Senseis.query.get(id)
     if len(name) > 0 or len(l) == 0:
         s.name = name
