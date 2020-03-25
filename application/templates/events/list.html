@@ -6,7 +6,6 @@
       <th>Name</th>
       <th>Date & time</th>
       <th>Info</th>
-      <th>id</th>
       <th></th>
     </tr>
     {% for e in events %}
@@ -14,14 +13,17 @@
       <td>{{ e.name }}</td>
       <td>{{ e.day }} {{ e.time }}</td>
       <td>{{ e.info }}</td>
-      <td>{{ e.id }}</td>
       <td>
+        {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_events', id=e.id) }}">
           <input type="submit" value="Edit"/>
         </form>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
   </table>
+  {% if current_user.is_authenticated %}
   <a href="{{ url_for('events_form') }}">Add an event</a>
+  {% endif %}
 {% endblock %}

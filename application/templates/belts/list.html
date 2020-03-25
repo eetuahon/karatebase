@@ -4,20 +4,22 @@
   <table>
     <tr>
       <th>Belt</th>
-      <th>id</th>
       <th></th>
     </tr>
     {% for belt in belts %}
     <tr>
       <td>{{ belt.belt }}</td>
-      <td>{{ belt.id }}</td>
       <td>
+        {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_belts', id=belt.id) }}">
           <input type="submit" value="Edit"/>
         </form>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
   </table>
+  {% if current_user.is_authenticated %}
   <a href="{{ url_for('belts_form') }}">Add a belt</a>
+  {% endif %}
 {% endblock %}

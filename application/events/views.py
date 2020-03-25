@@ -1,18 +1,21 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 from application.models import Events
 from application.forms import EventForm
 import datetime
 
 @app.route("/events", methods=["GET"])
 def events_index():
-    return render_template("events/list.html", events = Events.query.all())
+    return render_template("events/list.html", events = Events.query.order_by(Events.day, Events.time).all())
 
 @app.route("/events/new/")
+@login_required
 def events_form():
     return render_template("events/new.html", form = EventForm())
 
 @app.route("/events/", methods=["POST"])
+@login_required
 def events_create():
     form = EventForm(request.form)
     d = form.day.data
@@ -28,10 +31,12 @@ def events_create():
     return redirect(url_for("events_index"))
 
 @app.route("/events/<id>", methods=["POST"])
+@login_required
 def edit_events(id):
     return render_template("events/edit.html", events = Events.query.get(id), form = EventForm())
 
 @app.route("/events/ed/<id>", methods=["POST"])
+@login_required
 def mod_events(id):
     form = EventForm(request.form)
     name = form.name.data
@@ -54,6 +59,7 @@ def mod_events(id):
     return redirect(url_for("events_index"))
 
 @app.route("/events/del/<id>", methods=["POST"])
+@login_required
 def events_del(id):
     t = Events.query.get(id)
 

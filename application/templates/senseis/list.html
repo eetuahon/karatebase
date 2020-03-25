@@ -4,22 +4,28 @@
   <table>
     <tr>
       <th>Name</th>
+      {% if current_user.is_authenticated %}
       <th>Logon</th>
-      <th>id</th>
+      {% endif %}
       <th></th>
     </tr>
     {% for s in senseis %}
     <tr>
       <td>{{ s.name }}</td>
+      {% if current_user.is_authenticated %}
       <td>{{ s.logon }}</td>
-      <td>{{ s.id }}</td>
+      {% endif %}
       <td>
+        {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_senseis', id=s.id) }}">
           <input type="submit" value="Edit"/>
         </form>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
   </table>
+  {% if current_user.is_authenticated %}
   <a href="{{ url_for('senseis_form') }}">Add a sensei</a>
+  {% endif %}
 {% endblock %}

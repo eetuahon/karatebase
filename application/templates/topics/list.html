@@ -4,20 +4,22 @@
   <table>
     <tr>
       <th>Topic</th>
-      <th>id</th>
       <th></th>
     </tr>
     {% for t in topics %}
     <tr>
       <td>{{ t.desc }}</td>
-      <td>{{ t.id }}</td>
       <td>
+        {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_topics', id=t.id) }}">
           <input type="submit" value="Edit"/>
         </form>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
   </table>
+  {% if current_user.is_authenticated %}
   <a href="{{ url_for('topics_form') }}">Add a topic</a>
+  {% endif %}
 {% endblock %}

@@ -27,6 +27,7 @@ class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True, nullable=True)
     day = db.Column(db.Text, nullable=True)
+    #day = db.Column(db.DateTime, nullable=True)
     time = db.Column(db.Text, nullable=True)
     info = db.Column(db.Text, nullable=True)
 

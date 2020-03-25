@@ -18,3 +18,4 @@ Ominaisuuksia:
 [Tietokantakaavio](https://dbdiagram.io/d/5e69648f4495b02c3b88216f) tai edellä dbdiagram.png
 
 Herokussa [Karatebase-tsoha](http://karatebase-tsoha.herokuapp.com/)
+U/P tunnuksilla "genki"/"sudo3", toistaiseksi myös u case-sensitive

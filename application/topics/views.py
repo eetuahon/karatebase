@@ -1,17 +1,20 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 from application.models import Topics
 from application.forms import TopicForm
 
 @app.route("/topics", methods=["GET"])
 def topics_index():
-    return render_template("topics/list.html", topics = Topics.query.all())
+    return render_template("topics/list.html", topics = Topics.query.order_by(Topics.desc).all())
 
 @app.route("/topics/new/")
+@login_required
 def topics_form():
     return render_template("topics/new.html", form = TopicForm())
 
 @app.route("/topics/", methods=["POST"])
+@login_required
 def topics_create():
     form = TopicForm(request.form)
 
@@ -25,10 +28,12 @@ def topics_create():
     return redirect(url_for("topics_index"))
 
 @app.route("/topics/<id>", methods=["POST"])
+@login_required
 def edit_topics(id):
     return render_template("topics/edit.html", topics = Topics.query.get(id))
 
 @app.route("/topics/ed/<id>", methods=["POST"])
+@login_required
 def mod_topics(id):
     form = TopicForm(request.form)
     descr = form.desc.data.lower()
@@ -41,6 +46,7 @@ def mod_topics(id):
         return redirect(url_for("topics_index"))
 
 @app.route("/topics/del/<id>", methods=["POST"])
+@login_required
 def topics_del(id):
     t = Topics.query.get(id)
 
