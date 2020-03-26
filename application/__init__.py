@@ -2,7 +2,6 @@ from flask import Flask
 app = Flask(__name__)
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Table, MetaData # POIS POIS
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///karatebase.db"
 app.config["SQLALCHEMY_ECHO"] = True
 

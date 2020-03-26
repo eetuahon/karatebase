@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, url_for
 from flask_login import login_required
 from application.models import Senseis
 from application.forms import SenseiForm
+from application.auth.models import User
 
 @app.route("/senseis", methods=["GET"])
 def senseis_index():
@@ -17,8 +18,10 @@ def senseis_form():
 @login_required
 def senseis_create():
     form = SenseiForm(request.form)
-    s = Senseis(form.name.data, form.logon.data)
+    s = Senseis(form.name.data, form.logon.data.lower())
+    u = User(form.name.data, form.logon.data.lower(), "newuser")
     db.session().add(s)
+    db.session().add(u)
     db.session().commit()
   
     return redirect(url_for("senseis_index"))
@@ -34,12 +37,15 @@ def edit_senseis(id):
 def mod_senseis(id):
     form = SenseiForm(request.form)
     name = form.name.data
-    l = form.logon.data
+    l = form.logon.data.lower()
     s = Senseis.query.get(id)
+    user = User.query.filter_by(username=s.logon).first()
     if len(name) > 0 or len(l) == 0:
         s.name = name
+        user.name = name
     if len(l) > 0:
         s.logon = l
+        user.username = l
     db.session().commit()
     return redirect(url_for("senseis_index"))
 
@@ -47,8 +53,11 @@ def mod_senseis(id):
 @login_required
 def senseis_del(id):
     t = Senseis.query.get(id)
+    logon = t.logon
+    user = User.query.filter_by(username=logon).first()
 
     db.session().delete(t)
+    db.session().delete(user)
     db.session().commit()
   
     return redirect(url_for("senseis_index"))
