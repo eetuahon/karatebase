@@ -28,6 +28,10 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ## Changelog
 
+### 30.3.2020
+
+Tietokanta päivitetty viittaamaan ensisijaisesti Herokun Postgresiin.
+
 ### 26.3.2020
 
 Auth toimii yhdessä Senseis-taulukon kanssa. Uuden sensein luoinen luo kirjautumistunnukset senseille valitulla logonilla ja oletussalasanalla 'newuser'. Sensein logon on jatkossa aina lowercase ja käyttäjän kirjautumislomake lukee käyttäjätunnuksen jatkossa aina pieninä kirjaimina.
