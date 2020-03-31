@@ -28,6 +28,10 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ## Changelog
 
+### 31.3.2020
+
+Käyttäjätunnuksen salasana tallennetaan tietokantaan nyt hashina eikä raakatekstinä.
+
 ### 30.3.2020
 
 Tietokanta päivitetty viittaamaan ensisijaisesti Herokun Postgresiin.

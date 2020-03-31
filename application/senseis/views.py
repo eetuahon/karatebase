@@ -4,6 +4,7 @@ from flask_login import login_required
 from application.models import Senseis
 from application.forms import SenseiForm
 from application.auth.models import User
+from application.auth.hasher import hasher, checker
 
 @app.route("/senseis", methods=["GET"])
 def senseis_index():
@@ -19,7 +20,7 @@ def senseis_form():
 def senseis_create():
     form = SenseiForm(request.form)
     s = Senseis(form.name.data, form.logon.data.lower())
-    u = User(form.name.data, form.logon.data.lower(), "newuser")
+    u = User(form.name.data, form.logon.data.lower(), hasher("newuser"))
     db.session().add(s)
     db.session().add(u)
     db.session().commit()

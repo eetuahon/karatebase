@@ -1,5 +1,9 @@
 from flask import Flask
+from flask_bcrypt import Bcrypt
+
+
 app = Flask(__name__)
+f_bcrypt = Bcrypt(app)
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -8,7 +12,7 @@ import os
 if os.environ.get("HEROKU"):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tasks.db"    
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///karatebase.db"    
     app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(app)
@@ -24,6 +28,7 @@ from application.events import views
 from application.auth import models, views
 
 from application.auth.models import User
+from application.auth.hasher import hasher, checker
 from os import urandom
 app.config["SECRET_KEY"] = urandom(32)
 
@@ -43,8 +48,13 @@ try:
 except:
     pass
 
-user = User.query.filter_by(username="genki", password="sudo3").first()
+pw_hashed = hasher("sudo3")
+
+user = User.query.filter_by(username="genki").first()
 if not user:
-    admin = User("Genki Sudo", "genki", "sudo3")
+    admin = User("Genki Sudo", "genki", pw_hashed)
     db.session.add(admin)
+    db.session.commit()
+elif checker(user.password, "sudo3") == False:
+    user.password = pw_hashed
     db.session.commit()
