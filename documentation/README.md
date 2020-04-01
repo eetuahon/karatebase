@@ -30,6 +30,12 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ## Changelog
 
+### 2.4.2020
+
+Events, joilla ei ole aihetta, kerätään listana erillisessä yhteenvetokyselyssä, mutta luonnollisesti vain kirjuatuneella käyttäjällä. Tämä näkyy Events-valikossa ylimpänä, kun kirjautunut käyttäjä on Events-valikossa. Jos kaikilla harjoituksilla on vähintään 1 aihe, varoitusilmoitus ei näy.
+
+Ulkoasu: Events on valikossa lähimpänä Home-sivua.
+
 ### 1.4.2020
 
 Eventille voi nyt lisätä (ja poistaa) beltejä ja topiceja, jos on kirjautunut. Kirjautumaton käyttäjä näkee Events-listassa myös kullekin harjoitukselle määrätyt vyöt ja aiheet.

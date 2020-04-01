@@ -12,7 +12,8 @@ def events_index():
     e = Events.query.order_by(Events.day, Events.time).all()
     b = Events.belts_for_event()
     t = Events.topics_for_event()
-    return render_template("events/list.html", events = e, belts = b, topics = t)
+    no_t = Events.events_without_topic()
+    return render_template("events/list.html", events = e, belts = b, topics = t, no_topic = no_t)
 
 @app.route("/events/new/")
 @login_required

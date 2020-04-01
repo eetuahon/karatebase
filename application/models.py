@@ -163,3 +163,16 @@ class Events(db.Model):
         stmt = text("DELETE FROM topicevents"
                     " WHERE topic_id = :a AND event_id = :b").params(a=t_id, b=id)
         res = db.engine.execute(stmt)
+
+    @staticmethod
+    def events_without_topic():
+        stmt = text("SELECT E.day, E.time, COUNT(TE.topic_id) AS C"
+                    " FROM Events E LEFT JOIN topicevents TE ON"
+                    " E.id = TE.event_id GROUP BY E.name having C = 0 ORDER BY E.day, E.time")
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"day":row[0], "time":row[1]})
+        
+        return response
