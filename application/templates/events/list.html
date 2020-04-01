@@ -4,19 +4,28 @@
   <table>
     <tr>
       <th>Date & time</th>
+      <th>Sensei</th>
       <th>Belts</th>
+      <th>Topics</th>
       <th>Additional Info</th>
       <th></th>
     </tr>
     {% for e in events %}
     <tr>
       <td>{{ e.day }} {{ e.time }}</td>
+      <td>-Room for senseis-</td>
       <td>{% for b in belts %}
         {% if e.id == b.needed_id %}
         {{ b.belt }} <br>
         {%  endif %}
         {% endfor %}
       </td>
+      <td>{% for t in topics if t.needed_id == e.id %}
+        {{t.desc}}
+        {% if not loop.last %}
+            ,
+        {% endif %}
+    {% endfor %}</td>
       <td>{{ e.info }}</td>
       <td>
         {% if current_user.is_authenticated %}

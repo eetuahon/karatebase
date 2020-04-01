@@ -10,7 +10,9 @@ from sqlalchemy.sql.expression import select
 @app.route("/events", methods=["GET"])
 def events_index():
     e = Events.query.order_by(Events.day, Events.time).all()
-    return render_template("events/list.html", events = e, belts = Events.belts_for_event())
+    b = Events.belts_for_event()
+    t = Events.topics_for_event()
+    return render_template("events/list.html", events = e, belts = b, topics = t)
 
 @app.route("/events/new/")
 @login_required
@@ -23,9 +25,9 @@ def events_create():
     form = EventForm(request.form)
     d = form.day.data
     if d == None:
-        d = datetime.datetime.now().strftime("%d.%m.%Y")
+        d = datetime.datetime.now().strftime("%Y-%m-%d") # formerly "%d.%m.%Y"
     else:
-        d = d.strftime("%d.%m.%Y")
+        d = d.strftime("%Y.%m.%d") # "%d.%m.%Y"
     e = Events(form.name.data, d, form.time.data, form.info.data)
 
     db.session().add(e)
@@ -39,7 +41,9 @@ def edit_events(id):
     e = Events.query.get(id)
     belts = Events.belts_for_event_id(id)
     nb = Events.belts_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
 
 @app.route("/events/<id>/addbelt/<b_id>", methods=["POST"])
 @login_required
@@ -48,7 +52,9 @@ def add_belt(id, b_id):
     e = Events.query.get(id)
     belts = Events.belts_for_event_id(id)
     nb = Events.belts_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
 
 @app.route("/events/<id>/delbelt/<b_id>", methods=["POST"])
 @login_required
@@ -57,7 +63,31 @@ def del_belt(id, b_id):
     e = Events.query.get(id)
     belts = Events.belts_for_event_id(id)
     nb = Events.belts_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
+
+@app.route("/events/<id>/addtopic/<t_id>", methods=["POST"])
+@login_required
+def add_topic(id, t_id):
+    Events.add_topic(id, t_id)
+    e = Events.query.get(id)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
+
+@app.route("/events/<id>/deltopic/<t_id>", methods=["POST"])
+@login_required
+def del_topic(id, t_id):
+    Events.delete_topic(id, t_id)
+    e = Events.query.get(id)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
 
 @app.route("/events/ed/<id>", methods=["POST"])
 @login_required
@@ -69,9 +99,9 @@ def mod_events(id):
     i = form.info.data
     e = Events.query.get(id)
     if d != "" and d == None:
-        e.day = datetime.datetime.now().strftime("%d.%m.%Y")
+        e.day = datetime.datetime.now().strftime("%Y-%m-%d") #formerly "%d.%m.%Y"
     elif d != "":
-        d = d.strftime("%d.%m.%Y")
+        d = d.strftime("%Y-%m-%d")
         e.day = d
     if len(name) > 0:
         e.name = name

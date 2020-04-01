@@ -111,3 +111,55 @@ class Events(db.Model):
         stmt = text("DELETE FROM beltevents"
                     " WHERE belt_id = :a AND event_id = :b").params(a=b_id, b=id)
         res = db.engine.execute(stmt)
+
+    @staticmethod
+    def topics_for_event():
+        stmt = text("SELECT T.desc, T.id, E.id FROM Topics T"
+                    " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
+                    " LEFT JOIN Events E ON E.id = TE.event_id ORDER BY T.desc")
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"desc":row[0], "t_id":row[1], "needed_id":row[2]})
+        
+        return response
+
+    @staticmethod
+    def topics_for_event_id(id):
+        stmt = text("SELECT T.desc, T.id FROM Topics T"
+                    " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
+                    " WHERE TE.event_id = :a ORDER BY T.desc").params(a=id)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"desc":row[0], "t_id":row[1]})
+        
+        return response
+
+    @staticmethod
+    def topics_for_event_not_id(id):
+        stmt = text("SELECT T.desc, T.id FROM Topics T"
+                    " WHERE T.id NOT IN (SELECT Tt.id FROM Topics Tt"
+                    " LEFT JOIN topicevents TE ON Tt.id = TE.topic_id"
+                    " WHERE TE.event_id = :a) ORDER BY T.desc").params(a=id)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"desc":row[0], "t_id":row[1]})
+        
+        return response
+    
+    @staticmethod
+    def add_topic(id, t_id):
+        stmt = text("INSERT INTO topicevents (topic_id, event_id)"
+                    " VALUES (:a, :b)").params(a=t_id, b=id)
+        res = db.engine.execute(stmt)
+
+    @staticmethod
+    def delete_topic(id, t_id):
+        stmt = text("DELETE FROM topicevents"
+                    " WHERE topic_id = :a AND event_id = :b").params(a=t_id, b=id)
+        res = db.engine.execute(stmt)

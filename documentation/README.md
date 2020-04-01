@@ -32,9 +32,11 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ### 1.4.2020
 
-Eventille voi nyt lisätä (ja poistaa) beltejä, jos on kirjautunut. Kirjautumaton käyttäjä näkee Events-listassa myös kullekin harjoitukselle määrätyt vyöt.
+Eventille voi nyt lisätä (ja poistaa) beltejä ja topiceja, jos on kirjautunut. Kirjautumaton käyttäjä näkee Events-listassa myös kullekin harjoitukselle määrätyt vyöt ja aiheet.
 
 Eventin nimi ei jatkossa näy luettelossa, koska nimi on tarkoitettu senseiden sisäiseen yhteydenpitoon: lähinnä keskustelemaan samaan aikaan mahdollisesti olevista eri eventseistä ilman, että id:tä täytyy tietää.
+
+Aikaformaatti muutettu takaisin muotoon YYYY-MM-DD, jotta sorttausta voidaan parannella.
 
 ### 31.3.2020
 
