@@ -15,7 +15,7 @@ Ominaisuuksia:
 * seuran jäsen katsoo kirjautumatta tietyn päivän kaikki harjoitukset
 * seuran jäsen katsoo kirjautumatta kaikki harjoitukset kaikille
 
-[Tietokantakaavio](https://dbdiagram.io/d/5e69648f4495b02c3b88216f) tai edellä dbdiagram.png
+[Tietokantakaavio](https://dbdiagram.io/d/5e69648f4495b02c3b88216f) tai kuvana edellä [dbdiagram.png](https://github.com/eetuahon/karatebase/blob/master/dbdiagram.png)
 
 Herokussa [Karatebase-tsoha](http://karatebase-tsoha.herokuapp.com/)
-U/P tunnuksilla "genki"/"sudo3", toistaiseksi myös u case-sensitive
+U/P tunnuksilla "genki"/"sudo3" taikka sensein henkilökohtainen logon + "newuser"

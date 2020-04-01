@@ -2,13 +2,15 @@
 
 ## Kirjautuminen
 
-Parametrien luominen ja muokkaaminen edellyttää jatkossa kirjautumista. Kirjautuminen onnistuu toistaiseksi case-sensitiivisillä käyttäjätunnuksilla ja selväkielisesti tallennetuilla salasanoilla. Init luo automaattisesti tunnukset "genki"/"sudo3", jotta ohjelmaan pääsee aina sisälle.
+Parametrien luominen ja muokkaaminen edellyttää jatkossa kirjautumista. Kirjautuminen onnistuu käyttäjätunnuksilla ja hashina tallennetuilla salasanoilla. Init luo automaattisesti tunnukset "genki"/"sudo3", jotta ohjelmaan pääsee aina sisälle. Jokaisella senseillä on logon, jolla on salasana "newuser".
 
 ## Events
 
-Events kuvaa tapahtumia eli harjoitustilanteita. Harjoitukselle on ominaista uniikki nimi, jotta senseit voivat yksilöidä pitämänsä harjoitustunnit ilman id:tä. Harjoituksella on day eli päivä ja time eli aika, jotka toistaiseksi ovat vapaamuotoisia (formaatti implementoidaan myöhemmin). Info on harjoitukseen liittyvä sensein viesti harjoittelijoille, ja se voi olla esim. tieto käytettävästä tatamista tai harjoitukseen mukaan tarvittavista välineistä.
+Events kuvaa tapahtumia eli harjoitustilanteita. Harjoitukselle on ominaista uniikki nimi, jotta senseit voivat yksilöidä pitämänsä harjoitustunnit ilman id:tä. Harjoituksella on day eli päivä ja time eli aika, jotka toistaiseksi d.m.yyyy ja näin ollen väärässä järjestyksessä. Info on harjoitukseen liittyvä sensein viesti harjoittelijoille, ja se voi olla esim. tieto käytettävästä tatamista tai harjoitukseen mukaan tarvittavista välineistä.
 
 Eventsiä voi muokata luettelon Edit-painikkeella. Ainoastaan muuttuneet parametrit toteutetaan, eikä tyhjäksi jätettyjä kirjoiteta tietokantaan.
+
+Edit-painikkeesta voi asettaa eventsille sopivan / sopivat vyöt (belts).
 
 ## Senseis
 
@@ -27,6 +29,10 @@ Topics kuvaa karateharjoitukseen lisättävää teemaa tai muuta aihetta, joka l
 Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvaus kirjataan tietokantaan.
 
 ## Changelog
+
+### 1.4.2020
+
+Eventille voi nyt lisätä (ja poistaa) beltejä, jos on kirjautunut. Kirjautumaton käyttäjä näkee Events-listassa myös kullekin harjoitukselle määrätyt vyöt.
 
 ### 31.3.2020
 

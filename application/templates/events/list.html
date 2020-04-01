@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Date & time</th>
       <th>Info</th>
+      <th>Belts</th>
       <th></th>
     </tr>
     {% for e in events %}
@@ -13,6 +14,12 @@
       <td>{{ e.name }}</td>
       <td>{{ e.day }} {{ e.time }}</td>
       <td>{{ e.info }}</td>
+      <td>{% for b in belts %}
+        {% if e.id == b.needed_id %}
+        {{ b.belt }} <br>
+        {%  endif %}
+        {% endfor %}
+      </td>
       <td>
         {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_events', id=e.id) }}">

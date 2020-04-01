@@ -1,4 +1,5 @@
 from application import db
+from sqlalchemy.sql import text
 
 beltevents = db.Table('beltevents',
     db.Column('belt_id', db.Integer, db.ForeignKey('belts.id'), primary_key=True),
@@ -58,3 +59,28 @@ class Events(db.Model):
         self.day = day
         self.time = time
         self.info = info
+
+    @staticmethod
+    def belts_for_event():
+        stmt = text("SELECT B.belt, B.id, E.id FROM Belts B"
+                    " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
+                    " LEFT JOIN Events E ON E.id = BE.event_id")
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"belt":row[0], "b_id":row[1], "needed_id":row[2]})
+        
+        return response
+    
+    @staticmethod
+    def add_belt(id, b_id):
+        stmt = text("INSERT INTO beltevents (belt_id, event_id)"
+                    " VALUES (:a, :b)").params(a=b_id, b=id)
+        res = db.engine.execute(stmt)
+
+    @staticmethod
+    def delete_belt(id, b_id):
+        stmt = text("DELETE FROM beltevents"
+                    " WHERE belt_id = :a AND event_id = :b").params(a=b_id, b=id)
+        res = db.engine.execute(stmt)

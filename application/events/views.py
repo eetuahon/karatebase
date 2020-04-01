@@ -5,9 +5,12 @@ from application.models import Events
 from application.forms import EventForm
 import datetime
 
+from sqlalchemy.sql.expression import select
+
 @app.route("/events", methods=["GET"])
 def events_index():
-    return render_template("events/list.html", events = Events.query.order_by(Events.day, Events.time).all())
+    e = Events.query.order_by(Events.day, Events.time).all()
+    return render_template("events/list.html", events = e, belts = Events.belts_for_event())
 
 @app.route("/events/new/")
 @login_required
@@ -33,7 +36,25 @@ def events_create():
 @app.route("/events/<id>", methods=["POST"])
 @login_required
 def edit_events(id):
-    return render_template("events/edit.html", events = Events.query.get(id), form = EventForm())
+    e = Events.query.get(id)
+    belts = Events.belts_for_event()
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts)
+
+@app.route("/events/<id>/addbelt/<b_id>", methods=["POST"])
+@login_required
+def add_belt(id, b_id):
+    Events.add_belt(id, b_id)
+    e = Events.query.get(id)
+    belts = Events.belts_for_event()
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts)
+
+@app.route("/events/<id>/delbelt/<b_id>", methods=["POST"])
+@login_required
+def del_belt(id, b_id):
+    Events.delete_belt(id, b_id)
+    e = Events.query.get(id)
+    belts = Events.belts_for_event()
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts)
 
 @app.route("/events/ed/<id>", methods=["POST"])
 @login_required
