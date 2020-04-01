@@ -37,24 +37,27 @@ def events_create():
 @login_required
 def edit_events(id):
     e = Events.query.get(id)
-    belts = Events.belts_for_event()
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb)
 
 @app.route("/events/<id>/addbelt/<b_id>", methods=["POST"])
 @login_required
 def add_belt(id, b_id):
     Events.add_belt(id, b_id)
     e = Events.query.get(id)
-    belts = Events.belts_for_event()
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb)
 
 @app.route("/events/<id>/delbelt/<b_id>", methods=["POST"])
 @login_required
 def del_belt(id, b_id):
     Events.delete_belt(id, b_id)
     e = Events.query.get(id)
-    belts = Events.belts_for_event()
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb)
 
 @app.route("/events/ed/<id>", methods=["POST"])
 @login_required
@@ -83,7 +86,6 @@ def mod_events(id):
 @login_required
 def events_del(id):
     t = Events.query.get(id)
-
     db.session().delete(t)
     db.session().commit()
   

@@ -28,18 +28,18 @@
 
     <tr>
       <td>{% for b in belts %}
-        {% if events.id == b.needed_id %}
+
         <form method="POST" action="{{ url_for('del_belt', id=events.id, b_id=b.b_id) }}">
           <input type="submit" value="Remove {{ b.belt }}"/>
         </form>
-        {%  endif %}
+
         {% endfor %}</td>
-      <td>{% for b in belts %}
-        {% if events.id != b.needed_id %}
+      <td>{% for b in not_belts %}
+
         <form method="POST" action="{{ url_for('add_belt', id=events.id, b_id=b.b_id) }}">
           <input type="submit" value="Add {{ b.belt }}"/>
         </form>
-        {%  endif %}
+
         {% endfor %}</td>
     </tr>
     

@@ -64,12 +64,39 @@ class Events(db.Model):
     def belts_for_event():
         stmt = text("SELECT B.belt, B.id, E.id FROM Belts B"
                     " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
-                    " LEFT JOIN Events E ON E.id = BE.event_id")
+                    " LEFT JOIN Events E ON E.id = BE.event_id ORDER BY B.belt")
         res = db.engine.execute(stmt)
   
         response = []
         for row in res:
             response.append({"belt":row[0], "b_id":row[1], "needed_id":row[2]})
+        
+        return response
+
+    @staticmethod
+    def belts_for_event_id(id):
+        stmt = text("SELECT B.belt, B.id FROM Belts B"
+                    " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
+                    " WHERE BE.event_id = :a ORDER BY B.belt").params(a=id)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"belt":row[0], "b_id":row[1]})
+        
+        return response
+
+    @staticmethod
+    def belts_for_event_not_id(id):
+        stmt = text("SELECT B.belt, B.id FROM Belts B"
+                    " WHERE B.id NOT IN (SELECT Bb.id FROM Belts Bb"
+                    " LEFT JOIN beltevents BE ON Bb.id = BE.belt_id"
+                    " WHERE BE.event_id = :a) ORDER BY B.belt").params(a=id)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"belt":row[0], "b_id":row[1]})
         
         return response
     

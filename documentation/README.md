@@ -34,6 +34,8 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 Eventille voi nyt lisätä (ja poistaa) beltejä, jos on kirjautunut. Kirjautumaton käyttäjä näkee Events-listassa myös kullekin harjoitukselle määrätyt vyöt.
 
+Eventin nimi ei jatkossa näy luettelossa, koska nimi on tarkoitettu senseiden sisäiseen yhteydenpitoon: lähinnä keskustelemaan samaan aikaan mahdollisesti olevista eri eventseistä ilman, että id:tä täytyy tietää.
+
 ### 31.3.2020
 
 Käyttäjätunnuksen salasana tallennetaan tietokantaan nyt hashina eikä raakatekstinä.
