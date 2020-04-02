@@ -11,7 +11,8 @@
 {% endfor %}
 {% endif %}
 {% endif %}
-  <table>
+  <table class="table">
+    <thead class="thead-light">
     <tr>
       <th>Date & time</th>
       <th>Sensei</th>
@@ -20,9 +21,11 @@
       <th>Additional Info</th>
       <th></th>
     </tr>
+    </thead>
+    <tbody>
     {% for e in events %}
     <tr>
-      <td>{{ e.day }} {{ e.time }}</td>
+      <td>{{ e.day }}<br>{{ e.time }}</td>
       <td>-Room for senseis-</td>
       <td>{% for b in belts %}
         {% if e.id == b.needed_id %}
@@ -40,12 +43,13 @@
       <td>
         {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_events', id=e.id) }}">
-          <input type="submit" value="Edit"/>
+          <input type="submit" class="btn btn-primary btn-sm" value="Edit"/>
         </form>
         {% endif %}
       </td>
     </tr>
     {% endfor %}
+  </tbody>
   </table>
   {% if current_user.is_authenticated %}
   <a href="{{ url_for('events_form') }}">Add an event</a>

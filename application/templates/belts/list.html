@@ -11,23 +11,27 @@
 {% endfor %}
 {% endif %}
 {% endif %}
-  <table>
+  <table class="table">
+    <thead class="thead-light">
     <tr>
       <th>Belt</th>
       <th></th>
     </tr>
+    </thead>
+    <tbody>
     {% for belt in belts %}
     <tr>
       <td>{{ belt.belt }}</td>
       <td>
         {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_belts', id=belt.id) }}">
-          <input type="submit" value="Edit"/>
+          <input type="submit" class="btn btn-primary btn-sm" value="Edit"/>
         </form>
         {% endif %}
       </td>
     </tr>
     {% endfor %}
+  </tbody>
   </table>
   {% if current_user.is_authenticated %}
   <a href="{{ url_for('belts_form') }}">Add a belt</a>

@@ -30,14 +30,14 @@
       <td>{% for b in belts %}
 
         <form method="POST" action="{{ url_for('del_belt', id=events.id, b_id=b.b_id) }}">
-          <input type="submit" value="Remove {{ b.belt }}"/>
+          <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ b.belt }}"/>
         </form>
 
         {% endfor %}</td>
       <td>{% for b in not_belts %}
 
         <form method="POST" action="{{ url_for('add_belt', id=events.id, b_id=b.b_id) }}">
-          <input type="submit" value="Add {{ b.belt }}"/>
+          <input type="submit" class="btn btn-primary btn-sm" value="Add {{ b.belt }}"/>
         </form>
 
         {% endfor %}</td>
@@ -54,14 +54,14 @@
       <td>{% for t in topics %}
 
         <form method="POST" action="{{ url_for('del_topic', id=events.id, t_id=t.t_id) }}">
-          <input type="submit" value="Remove {{ t.desc }}"/>
+          <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ t.desc }}"/>
         </form>
 
         {% endfor %}</td>
       <td>{% for t in not_topics %}
 
         <form method="POST" action="{{ url_for('add_topic', id=events.id, t_id=t.t_id) }}">
-          <input type="submit" value="Add {{ t.desc }}"/>
+          <input type="submit" class="btn btn-primary btn-sm" value="Add {{ t.desc }}"/>
         </form>
 
         {% endfor %}</td>
@@ -105,7 +105,7 @@
       <tr>
   <td colspan="2">
     <input type="hidden" name="id" value="{{ events.id }}"/>
-    <input type="submit" value="Change"/>
+    <input type="submit" class="btn btn-primary btn-sm" value="Change"/>
   </td>
       </tr>
   </table>
@@ -115,7 +115,7 @@
   <p>Do you wish to delete this event? You cannot undo this!</p>
   <form method="POST" action="{{ url_for('events_del', id=events.id) }}">
     <input type="hidden" name="id" value={{ events.id }}/>
-    <input type="submit" value="Delete"/>
+    <input type="submit" class="btn btn-warning" value="Delete"/>
   </form>
 
 {% endblock %}

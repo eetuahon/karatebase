@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p>Current info</p>
+<h3>Current info</h3>
   <table>
     <tr>
       <th>Belt</th>
@@ -18,14 +18,14 @@
     
 
   </table>
-  <p>Edit</p>
+  <h3>Edit</h3>
 <p>Unlike other items, you are not supposed to edit a belt. If there is a typo, please delete
   the belt and add a new one.
 </p>
   <p>Do you wish to delete this belt? You cannot undo this!</p>
   <form method="POST" action="{{ url_for('belts_del', id=belts.id) }}">
     <input type="hidden" name="id" value={{ belts.id }}/>
-    <input type="submit" value="Delete"/>
+    <input type="submit" class="btn btn-warning" value="Delete"/>
   </form>
 
 {% endblock %}

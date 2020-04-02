@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p>Current info</p>
+<h3>Current info</h3>
   <table>
     <tr>
       <th>Topic</th>
@@ -19,19 +19,19 @@
     
 
   </table>
-  <p>Edit</p>
+  <h3>Edit</h3>
 
   <form method="POST" action="{{ url_for('mod_topics', id=topics.id) }}">
     <label for="desc">New description:</label>
     <input type="text" name="desc"/>
     <input type="hidden" name="id" value="{{ topics.id }}"/>
-    <input type="submit" value="Change"/>
+    <input type="submit" class="btn btn-primary btn-sm" value="Change"/>
   </form>
 
   <p>Do you wish to delete the description? You cannot undo this!</p>
   <form method="POST" action="{{ url_for('topics_del', id=topics.id) }}">
     <input type="hidden" name="id" value={{ topics.id }}/>
-    <input type="submit" value="Delete"/>
+    <input type="submit" class="btn btn-warning" value="Delete"/>
   </form>
 
 {% endblock %}
