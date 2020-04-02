@@ -67,6 +67,30 @@
         {% endfor %}</td>
     </tr>
   </table>
+  <h3>Senseis</h3>
+  <table>
+    <tr>
+      <th>For this event</th>
+      <th>Not for this event</th>
+    </tr>
+
+    <tr>
+      <td>{% for s in senseis %}
+
+        <form method="POST" action="{{ url_for('del_sensei', id=events.id, s_id=s.s_id) }}">
+          <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ s.name }}"/>
+        </form>
+
+        {% endfor %}</td>
+      <td>{% for s in not_senseis %}
+
+        <form method="POST" action="{{ url_for('add_sensei', id=events.id, s_id=s.s_id) }}">
+          <input type="submit" class="btn btn-primary btn-sm" value="Add {{ s.name }}"/>
+        </form>
+
+        {% endfor %}</td>
+    </tr>
+  </table>
   <h3>Edit</h3>
   <form method="POST" action="{{ url_for('mod_events', id=events.id) }}">
     <table>

@@ -13,7 +13,8 @@ def events_index():
     b = Events.belts_for_event()
     t = Events.topics_for_event()
     no_t = Events.events_without_topic()
-    return render_template("events/list.html", events = e, belts = b, topics = t, no_topic = no_t)
+    s = Events.senseis_for_event()
+    return render_template("events/list.html", events = e, belts = b, topics = t, no_topic = no_t, senseis = s)
 
 @app.route("/events/new/")
 @login_required
@@ -44,7 +45,9 @@ def edit_events(id):
     nb = Events.belts_for_event_not_id(id)
     t = Events.topics_for_event_id(id)
     nt = Events.topics_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt, senseis = s, not_senseis = ns)
 
 @app.route("/events/<id>/addbelt/<b_id>", methods=["POST"])
 @login_required
@@ -55,7 +58,9 @@ def add_belt(id, b_id):
     nb = Events.belts_for_event_not_id(id)
     t = Events.topics_for_event_id(id)
     nt = Events.topics_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt, senseis = s, not_senseis = ns)
 
 @app.route("/events/<id>/delbelt/<b_id>", methods=["POST"])
 @login_required
@@ -66,7 +71,9 @@ def del_belt(id, b_id):
     nb = Events.belts_for_event_not_id(id)
     t = Events.topics_for_event_id(id)
     nt = Events.topics_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt, senseis = s, not_senseis = ns)
 
 @app.route("/events/<id>/addtopic/<t_id>", methods=["POST"])
 @login_required
@@ -77,7 +84,9 @@ def add_topic(id, t_id):
     nb = Events.belts_for_event_not_id(id)
     t = Events.topics_for_event_id(id)
     nt = Events.topics_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt, senseis = s, not_senseis = ns)
 
 @app.route("/events/<id>/deltopic/<t_id>", methods=["POST"])
 @login_required
@@ -88,7 +97,35 @@ def del_topic(id, t_id):
     nb = Events.belts_for_event_not_id(id)
     t = Events.topics_for_event_id(id)
     nt = Events.topics_for_event_not_id(id)
-    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt, senseis = s, not_senseis = ns)
+
+@app.route("/events/<id>/addsensei/<s_id>", methods=["POST"])
+@login_required
+def add_sensei(id, s_id):
+    Events.add_sensei(id, s_id)
+    e = Events.query.get(id)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt, senseis = s, not_senseis = ns)
+
+@app.route("/events/<id>/delsensei/<s_id>", methods=["POST"])
+@login_required
+def del_sensei(id, s_id):
+    Events.delete_sensei(id, s_id)
+    e = Events.query.get(id)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return render_template("events/edit.html", events = e, form = EventForm(), belts = belts, not_belts = nb, topics = t, not_topics = nt, senseis = s, not_senseis = ns)
 
 @app.route("/events/ed/<id>", methods=["POST"])
 @login_required

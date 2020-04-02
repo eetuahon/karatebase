@@ -26,7 +26,11 @@
     {% for e in events %}
     <tr>
       <td>{{ e.day }}<br>{{ e.time }}</td>
-      <td>-Room for senseis-</td>
+      <td>{% for s in senseis %}
+        {% if e.id == s.needed_id %}
+        {{ s.name }} <br>
+        {%  endif %}
+        {% endfor %}</td>
       <td>{% for b in belts %}
         {% if e.id == b.needed_id %}
         {{ b.belt }} <br>

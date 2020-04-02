@@ -164,6 +164,58 @@ class Events(db.Model):
                     " WHERE topic_id = :a AND event_id = :b").params(a=t_id, b=id)
         res = db.engine.execute(stmt)
 
+    staticmethod
+    def senseis_for_event():
+        stmt = text("SELECT S.name, S.id, E.id FROM Senseis S"
+                    " LEFT JOIN senseievents SE ON S.id = SE.sensei_id"
+                    " LEFT JOIN Events E ON E.id = SE.event_id ORDER BY S.name")
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"name":row[0], "s_id":row[1], "needed_id":row[2]})
+        
+        return response
+
+    @staticmethod
+    def senseis_for_event_id(id):
+        stmt = text("SELECT S.name, S.id FROM Senseis S"
+                    " LEFT JOIN senseievents SE ON S.id = SE.sensei_id"
+                    " WHERE SE.event_id = :a ORDER BY S.name").params(a=id)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"name":row[0], "s_id":row[1]})
+        
+        return response
+
+    @staticmethod
+    def senseis_for_event_not_id(id):
+        stmt = text("SELECT S.name, S.id FROM Senseis S"
+                    " WHERE S.id NOT IN (SELECT Ss.id FROM Senseis Ss"
+                    " LEFT JOIN senseievents SE ON Ss.id = SE.sensei_id"
+                    " WHERE SE.event_id = :a) ORDER BY S.name").params(a=id)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"name":row[0], "s_id":row[1]})
+        
+        return response
+    
+    @staticmethod
+    def add_sensei(id, s_id):
+        stmt = text("INSERT INTO senseievents (sensei_id, event_id)"
+                    " VALUES (:a, :b)").params(a=s_id, b=id)
+        res = db.engine.execute(stmt)
+
+    @staticmethod
+    def delete_sensei(id, s_id):
+        stmt = text("DELETE FROM senseievents"
+                    " WHERE sensei_id = :a AND event_id = :b").params(a=s_id, b=id)
+        res = db.engine.execute(stmt)
+
     @staticmethod
     def events_without_topic():
         stmt = text("SELECT E.day, E.time, E.id"
