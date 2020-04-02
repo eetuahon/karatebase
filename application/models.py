@@ -166,13 +166,26 @@ class Events(db.Model):
 
     @staticmethod
     def events_without_topic():
-        stmt = text("SELECT E.day, E.time, COUNT(TE.topic_id) AS C"
+        stmt = text("SELECT E.day, E.time, E.id"
                     " FROM Events E LEFT JOIN topicevents TE ON"
-                    " E.id = TE.event_id GROUP BY E.name having C = 0 ORDER BY E.day, E.time")
+                    " E.id = TE.event_id GROUP BY E.name having COUNT(TE.topic_id) = 0 ORDER BY E.day, E.time")
         res = db.engine.execute(stmt)
   
         response = []
         for row in res:
-            response.append({"day":row[0], "time":row[1]})
+            response.append({"day":row[0], "time":row[1], "id":row[2]})
+        
+        return response
+
+    @staticmethod
+    def belts_without_event():
+        stmt = text("SELECT B.belt FROM Belts B LEFT JOIN"
+                    " beltevents BE ON B.id = BE.belt_id GROUP BY B.belt"
+                    " having COUNT(BE.event_id) = 0 ORDER BY B.belt")
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append({"belt":row[0]})
         
         return response

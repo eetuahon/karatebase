@@ -36,7 +36,7 @@ def events_create():
   
     return redirect(url_for("events_index"))
 
-@app.route("/events/<id>", methods=["POST"])
+@app.route("/events/<id>", methods=["POST", "GET"])
 @login_required
 def edit_events(id):
     e = Events.query.get(id)

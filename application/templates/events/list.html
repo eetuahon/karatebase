@@ -6,7 +6,7 @@
 <h3>Add topic for events: {{ no_topic|length }}</h3>
 {% for e in no_topic %}
 <ul>
-  <li>{{ e.day }} {{ e.time }}</li>
+  <li>{{ e.day }} {{ e.time }} <a href="{{ url_for('edit_events', id=e.id) }}">Add topic</a></li>
 </ul>
 {% endfor %}
 {% endif %}

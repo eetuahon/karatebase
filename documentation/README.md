@@ -10,7 +10,7 @@ Events kuvaa tapahtumia eli harjoitustilanteita. Harjoitukselle on ominaista uni
 
 Eventsiä voi muokata luettelon Edit-painikkeella. Ainoastaan muuttuneet parametrit toteutetaan, eikä tyhjäksi jätettyjä kirjoiteta tietokantaan.
 
-Edit-painikkeesta voi asettaa eventsille sopivan / sopivat vyöt (belts).
+Edit-painikkeesta voi asettaa eventsille sopivan / sopivat vyöt (belts), aiheet (topic) tai senseit.
 
 ## Senseis
 
@@ -32,7 +32,7 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ### 2.4.2020
 
-Events, joilla ei ole aihetta, kerätään listana erillisessä yhteenvetokyselyssä, mutta luonnollisesti vain kirjuatuneella käyttäjällä. Tämä näkyy Events-valikossa ylimpänä, kun kirjautunut käyttäjä on Events-valikossa. Jos kaikilla harjoituksilla on vähintään 1 aihe, varoitusilmoitus ei näy.
+Events, joilla ei ole aihetta, kerätään listana erillisessä yhteenvetokyselyssä, mutta luonnollisesti vain kirjuatuneella käyttäjällä. Tämä näkyy Events-valikossa ylimpänä, kun kirjautunut käyttäjä on Events-valikossa. Jos kaikilla harjoituksilla on vähintään 1 aihe, varoitusilmoitus ei näy. Belts-valikko antaa kirjautuneelle käyttäjälle varoitusilmoituksen ja luettelon, jos jollakin vyöllä ei ole lainkaan harjoituksia. Jos kaikilla ryhmillä on harjoituksia, varoitusta ei näy.
 
 Ulkoasu: Events on valikossa lähimpänä Home-sivua.
 

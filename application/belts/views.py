@@ -1,12 +1,13 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
 from flask_login import login_required
-from application.models import Belts
+from application.models import Belts, Events
 from application.forms import BeltForm
 
 @app.route("/belts", methods=["GET"])
 def belts_index():
-    return render_template("belts/list.html", belts = Belts.query.order_by(Belts.belt).all())
+    ne = Events.belts_without_event()
+    return render_template("belts/list.html", belts = Belts.query.order_by(Belts.belt).all(), no_events = ne)
 
 @app.route("/belts/new/")
 @login_required
