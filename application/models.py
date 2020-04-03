@@ -220,7 +220,7 @@ class Events(db.Model):
     def events_without_topic():
         stmt = text("SELECT E.day, E.time, E.id"
                     " FROM Events E LEFT JOIN topicevents TE ON"
-                    " E.id = TE.event_id GROUP BY E.name having COUNT(TE.topic_id) = 0 ORDER BY E.day, E.time")
+                    " E.id = TE.event_id GROUP BY E.id, E.day, E.time having COUNT(TE.topic_id) = 0 ORDER BY E.day, E.time")
         res = db.engine.execute(stmt)
   
         response = []
