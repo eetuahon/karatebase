@@ -26,18 +26,20 @@
     {% for e in events %}
     <tr>
       <td>{{ e.day }}<br>{{ e.time }}</td>
-      <td>{% for s in senseis %}
-        {% if e.id == s.needed_id %}
-        {{ s.name }} <br>
+      <td>{% for s in e.sensei_list() %}
+        {{ s.name }}
+        {% if not loop.last %}
+        <br>
         {%  endif %}
         {% endfor %}</td>
-      <td>{% for b in belts %}
-        {% if e.id == b.needed_id %}
-        {{ b.belt }} <br>
+      <td>{% for b in e.belt_list() %}
+        {{ b.belt }}
+        {% if not loop.last %}
+        <br>
         {%  endif %}
         {% endfor %}
       </td>
-      <td>{% for t in topics if t.needed_id == e.id %}
+      <td>{% for t in e.topic_list() %}
         {{t.desc}}
         {% if not loop.last %}
             ,

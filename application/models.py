@@ -43,7 +43,6 @@ class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True, nullable=True)
     day = db.Column(db.Text, nullable=True)
-    #day = db.Column(db.DateTime, nullable=True)
     time = db.Column(db.Text, nullable=True)
     info = db.Column(db.Text, nullable=True)
 
@@ -60,24 +59,24 @@ class Events(db.Model):
         self.time = time
         self.info = info
 
-    @staticmethod
-    def belts_for_event():
-        stmt = text("SELECT B.belt, B.id, E.id FROM Belts B"
-                    " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
-                    " LEFT JOIN Events E ON E.id = BE.event_id ORDER BY LOWER(B.belt)")
-        res = db.engine.execute(stmt)
-  
-        response = []
-        for row in res:
-            response.append({"belt":row[0], "b_id":row[1], "needed_id":row[2]})
-        
-        return response
+#    @staticmethod
+#    def belts_for_event():
+#        stmt = text("SELECT B.belt, B.id, E.id FROM Belts B"
+#                    " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
+#                    " LEFT JOIN Events E ON E.id = BE.event_id ORDER BY LOWER(B.belt)")
+##        res = db.engine.execute(stmt)
+ # 
+ #       response = []
+ #       for row in res:
+ ##           response.append({"belt":row[0], "b_id":row[1], "needed_id":row[2]})
+ #       
+ #       return response
 
-    @staticmethod
-    def belts_for_event_id(id):
+    #@staticmethod
+    def belt_list(self):
         stmt = text("SELECT B.belt, B.id FROM Belts B"
                     " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
-                    " WHERE BE.event_id = :a ORDER BY LOWER(B.belt)").params(a=id)
+                    " WHERE BE.event_id = :a ORDER BY LOWER(B.belt)").params(a=self.id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -86,12 +85,12 @@ class Events(db.Model):
         
         return response
 
-    @staticmethod
-    def belts_for_event_not_id(id):
+    #@staticmethod
+    def non_belt_list(self):
         stmt = text("SELECT B.belt, B.id FROM Belts B"
                     " WHERE B.id NOT IN (SELECT Bb.id FROM Belts Bb"
                     " LEFT JOIN beltevents BE ON Bb.id = BE.belt_id"
-                    " WHERE BE.event_id = :a) ORDER BY LOWER(B.belt)").params(a=id)
+                    " WHERE BE.event_id = :a) ORDER BY LOWER(B.belt)").params(a=self.id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -112,24 +111,24 @@ class Events(db.Model):
                     " WHERE belt_id = :a AND event_id = :b").params(a=b_id, b=id)
         res = db.engine.execute(stmt)
 
-    @staticmethod
-    def topics_for_event():
-        stmt = text("SELECT T.desc, T.id, E.id FROM Topics T"
-                    " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
-                    " LEFT JOIN Events E ON E.id = TE.event_id ORDER BY LOWER(T.desc)")
-        res = db.engine.execute(stmt)
-  
-        response = []
-        for row in res:
-            response.append({"desc":row[0], "t_id":row[1], "needed_id":row[2]})
-        
-        return response
+#    @staticmethod
+#    def topics_for_event():
+##        stmt = text("SELECT T.desc, T.id, E.id FROM Topics T"
+ #                   " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
+ #                   " LEFT JOIN Events E ON E.id = TE.event_id ORDER BY LOWER(T.desc)")
+ #       res = db.engine.execute(stmt)
+#  
+#        response = []
+#        for row in res:
+#            response.append({"desc":row[0], "t_id":row[1], "needed_id":row[2]})
+#        
+#        return response
 
-    @staticmethod
-    def topics_for_event_id(id):
+#    @staticmethod
+    def topic_list(self):
         stmt = text("SELECT T.desc, T.id FROM Topics T"
                     " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
-                    " WHERE TE.event_id = :a ORDER BY LOWER(T.desc)").params(a=id)
+                    " WHERE TE.event_id = :a ORDER BY LOWER(T.desc)").params(a=self.id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -138,12 +137,12 @@ class Events(db.Model):
         
         return response
 
-    @staticmethod
-    def topics_for_event_not_id(id):
+#    @staticmethod
+    def non_topic_list(self):
         stmt = text("SELECT T.desc, T.id FROM Topics T"
                     " WHERE T.id NOT IN (SELECT Tt.id FROM Topics Tt"
                     " LEFT JOIN topicevents TE ON Tt.id = TE.topic_id"
-                    " WHERE TE.event_id = :a) ORDER BY LOWER(T.desc)").params(a=id)
+                    " WHERE TE.event_id = :a) ORDER BY LOWER(T.desc)").params(a=self.id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -164,24 +163,10 @@ class Events(db.Model):
                     " WHERE topic_id = :a AND event_id = :b").params(a=t_id, b=id)
         res = db.engine.execute(stmt)
 
-    staticmethod
-    def senseis_for_event():
-        stmt = text("SELECT S.name, S.id, E.id FROM Senseis S"
-                    " LEFT JOIN senseievents SE ON S.id = SE.sensei_id"
-                    " LEFT JOIN Events E ON E.id = SE.event_id ORDER BY LOWER(S.name)")
-        res = db.engine.execute(stmt)
-  
-        response = []
-        for row in res:
-            response.append({"name":row[0], "s_id":row[1], "needed_id":row[2]})
-        
-        return response
-
-    @staticmethod
-    def senseis_for_event_id(id):
+    def sensei_list(self):
         stmt = text("SELECT S.name, S.id FROM Senseis S"
                     " LEFT JOIN senseievents SE ON S.id = SE.sensei_id"
-                    " WHERE SE.event_id = :a ORDER BY LOWER(S.name)").params(a=id)
+                    " WHERE SE.event_id = :a ORDER BY LOWER(S.name)").params(a=self.id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -190,12 +175,11 @@ class Events(db.Model):
         
         return response
 
-    @staticmethod
-    def senseis_for_event_not_id(id):
+    def non_sensei_list(self):
         stmt = text("SELECT S.name, S.id FROM Senseis S"
                     " WHERE S.id NOT IN (SELECT Ss.id FROM Senseis Ss"
                     " LEFT JOIN senseievents SE ON Ss.id = SE.sensei_id"
-                    " WHERE SE.event_id = :a) ORDER BY LOWER(S.name)").params(a=id)
+                    " WHERE SE.event_id = :a) ORDER BY LOWER(S.name)").params(a=self.id)
         res = db.engine.execute(stmt)
   
         response = []

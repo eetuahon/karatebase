@@ -23,19 +23,19 @@
   <h3>Belts</h3>
   <table>
     <tr>
-      <th>For this event</th>
-      <th>Not for this event</th>
+      <th>Selected</th>
+      <th>Unselected</th>
     </tr>
 
     <tr>
-      <td>{% for b in belts %}
+      <td>{% for b in events.belt_list() %}
 
         <form method="POST" action="{{ url_for('del_belt', id=events.id, b_id=b.b_id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ b.belt }}"/>
         </form>
 
         {% endfor %}</td>
-      <td>{% for b in not_belts %}
+      <td>{% for b in events.non_belt_list() %}
 
         <form method="POST" action="{{ url_for('add_belt', id=events.id, b_id=b.b_id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Add {{ b.belt }}"/>
@@ -47,19 +47,19 @@
   <h3>Topics</h3>
   <table>
     <tr>
-      <th>For this event</th>
-      <th>Not for this event</th>
+      <th>Selected</th>
+      <th>Unselected</th>
     </tr>
 
     <tr>
-      <td>{% for t in topics %}
+      <td>{% for t in events.topic_list() %}
 
         <form method="POST" action="{{ url_for('del_topic', id=events.id, t_id=t.t_id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ t.desc }}"/>
         </form>
 
         {% endfor %}</td>
-      <td>{% for t in not_topics %}
+      <td>{% for t in events.non_topic_list() %}
 
         <form method="POST" action="{{ url_for('add_topic', id=events.id, t_id=t.t_id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Add {{ t.desc }}"/>
@@ -71,19 +71,19 @@
   <h3>Senseis</h3>
   <table>
     <tr>
-      <th>For this event</th>
-      <th>Not for this event</th>
+      <th>Selected</th>
+      <th>Unselected</th>
     </tr>
 
     <tr>
-      <td>{% for s in senseis %}
+      <td>{% for s in events.sensei_list() %}
 
         <form method="POST" action="{{ url_for('del_sensei', id=events.id, s_id=s.s_id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ s.name }}"/>
         </form>
 
         {% endfor %}</td>
-      <td>{% for s in not_senseis %}
+      <td>{% for s in events.non_sensei_list() %}
 
         <form method="POST" action="{{ url_for('add_sensei', id=events.id, s_id=s.s_id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Add {{ s.name }}"/>
