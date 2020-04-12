@@ -32,7 +32,7 @@
                 </ul>
                 <div class="my-2 my-sm-0 text-white">
             {% if current_user.is_authenticated %}
-            Logged in as {{ current_user.name }}. <a href="{{ url_for('auth_logout') }}" class="text-warning">Log out</a>
+            Logged in as {{ current_user.name }}. {% if current_user.username != 'genki' %} Change password. {% endif %} <a href="{{ url_for('auth_logout') }}" class="text-warning">Log out</a>
             {% else %}
             <a href="{{ url_for('auth_login') }}" class="text-white">Log in</a>
             {% endif %}

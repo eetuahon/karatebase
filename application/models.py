@@ -64,7 +64,7 @@ class Events(db.Model):
     def belts_for_event():
         stmt = text("SELECT B.belt, B.id, E.id FROM Belts B"
                     " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
-                    " LEFT JOIN Events E ON E.id = BE.event_id ORDER BY B.belt")
+                    " LEFT JOIN Events E ON E.id = BE.event_id ORDER BY LOWER(B.belt)")
         res = db.engine.execute(stmt)
   
         response = []
@@ -77,7 +77,7 @@ class Events(db.Model):
     def belts_for_event_id(id):
         stmt = text("SELECT B.belt, B.id FROM Belts B"
                     " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
-                    " WHERE BE.event_id = :a ORDER BY B.belt").params(a=id)
+                    " WHERE BE.event_id = :a ORDER BY LOWER(B.belt)").params(a=id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -91,7 +91,7 @@ class Events(db.Model):
         stmt = text("SELECT B.belt, B.id FROM Belts B"
                     " WHERE B.id NOT IN (SELECT Bb.id FROM Belts Bb"
                     " LEFT JOIN beltevents BE ON Bb.id = BE.belt_id"
-                    " WHERE BE.event_id = :a) ORDER BY B.belt").params(a=id)
+                    " WHERE BE.event_id = :a) ORDER BY LOWER(B.belt)").params(a=id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -116,7 +116,7 @@ class Events(db.Model):
     def topics_for_event():
         stmt = text("SELECT T.desc, T.id, E.id FROM Topics T"
                     " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
-                    " LEFT JOIN Events E ON E.id = TE.event_id ORDER BY T.desc")
+                    " LEFT JOIN Events E ON E.id = TE.event_id ORDER BY LOWER(T.desc)")
         res = db.engine.execute(stmt)
   
         response = []
@@ -129,7 +129,7 @@ class Events(db.Model):
     def topics_for_event_id(id):
         stmt = text("SELECT T.desc, T.id FROM Topics T"
                     " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
-                    " WHERE TE.event_id = :a ORDER BY T.desc").params(a=id)
+                    " WHERE TE.event_id = :a ORDER BY LOWER(T.desc)").params(a=id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -143,7 +143,7 @@ class Events(db.Model):
         stmt = text("SELECT T.desc, T.id FROM Topics T"
                     " WHERE T.id NOT IN (SELECT Tt.id FROM Topics Tt"
                     " LEFT JOIN topicevents TE ON Tt.id = TE.topic_id"
-                    " WHERE TE.event_id = :a) ORDER BY T.desc").params(a=id)
+                    " WHERE TE.event_id = :a) ORDER BY LOWER(T.desc)").params(a=id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -168,7 +168,7 @@ class Events(db.Model):
     def senseis_for_event():
         stmt = text("SELECT S.name, S.id, E.id FROM Senseis S"
                     " LEFT JOIN senseievents SE ON S.id = SE.sensei_id"
-                    " LEFT JOIN Events E ON E.id = SE.event_id ORDER BY S.name")
+                    " LEFT JOIN Events E ON E.id = SE.event_id ORDER BY LOWER(S.name)")
         res = db.engine.execute(stmt)
   
         response = []
@@ -181,7 +181,7 @@ class Events(db.Model):
     def senseis_for_event_id(id):
         stmt = text("SELECT S.name, S.id FROM Senseis S"
                     " LEFT JOIN senseievents SE ON S.id = SE.sensei_id"
-                    " WHERE SE.event_id = :a ORDER BY S.name").params(a=id)
+                    " WHERE SE.event_id = :a ORDER BY LOWER(S.name)").params(a=id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -195,7 +195,7 @@ class Events(db.Model):
         stmt = text("SELECT S.name, S.id FROM Senseis S"
                     " WHERE S.id NOT IN (SELECT Ss.id FROM Senseis Ss"
                     " LEFT JOIN senseievents SE ON Ss.id = SE.sensei_id"
-                    " WHERE SE.event_id = :a) ORDER BY S.name").params(a=id)
+                    " WHERE SE.event_id = :a) ORDER BY LOWER(S.name)").params(a=id)
         res = db.engine.execute(stmt)
   
         response = []
@@ -220,7 +220,7 @@ class Events(db.Model):
     def events_without_topic():
         stmt = text("SELECT E.day, E.time, E.id"
                     " FROM Events E LEFT JOIN topicevents TE ON"
-                    " E.id = TE.event_id GROUP BY E.id, E.day, E.time having COUNT(TE.topic_id) = 0 ORDER BY E.day, E.time")
+                    " E.id = TE.event_id GROUP BY E.id, E.day, E.time having COUNT(TE.topic_id) = 0 ORDER BY E.day, LOWER(E.time)")
         res = db.engine.execute(stmt)
   
         response = []
@@ -233,7 +233,7 @@ class Events(db.Model):
     def belts_without_event():
         stmt = text("SELECT B.belt FROM Belts B LEFT JOIN"
                     " beltevents BE ON B.id = BE.belt_id GROUP BY B.belt"
-                    " having COUNT(BE.event_id) = 0 ORDER BY B.belt")
+                    " having COUNT(BE.event_id) = 0 ORDER BY LOWER(B.belt)")
         res = db.engine.execute(stmt)
   
         response = []

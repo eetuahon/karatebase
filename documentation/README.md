@@ -6,7 +6,9 @@ Parametrien luominen ja muokkaaminen edellyttää jatkossa kirjautumista. Kirjau
 
 ## Events
 
-Events kuvaa tapahtumia eli harjoitustilanteita. Harjoitukselle on ominaista uniikki nimi, jotta senseit voivat yksilöidä pitämänsä harjoitustunnit ilman id:tä. Harjoituksella on day eli päivä ja time eli aika, jotka toistaiseksi d.m.yyyy ja näin ollen väärässä järjestyksessä. Info on harjoitukseen liittyvä sensein viesti harjoittelijoille, ja se voi olla esim. tieto käytettävästä tatamista tai harjoitukseen mukaan tarvittavista välineistä.
+Events kuvaa tapahtumia eli harjoitustilanteita. Harjoitukselle on ominaista uniikki nimi, jotta senseit voivat yksilöidä pitämänsä harjoitustunnit ilman id:tä. Harjoituksella on day eli päivä ja time eli aika, jotka toistaiseksi yyyy-mm-dd. Info on harjoitukseen liittyvä sensein viesti harjoittelijoille, ja se voi olla esim. tieto käytettävästä tatamista tai harjoitukseen mukaan tarvittavista välineistä.
+
+Eventsin osalta validoidaan, että nimi on uniikki sekä että nimi ja aika ovat 3–15 merkkiä pitkiä ja alimittainen ei kelpaa välilyönneillä.
 
 Eventsiä voi muokata luettelon Edit-painikkeella. Ainoastaan muuttuneet parametrit toteutetaan, eikä tyhjäksi jätettyjä kirjoiteta tietokantaan.
 
@@ -14,21 +16,27 @@ Edit-painikkeesta voi asettaa eventsille sopivan / sopivat vyöt (belts), aiheet
 
 ## Senseis
 
-Senseis kuvaa harjoituksia vetäviä senseitä. Senseille on ominaista nimi sekä uniikki logon, jolla nimikaimat voidaan erottaa toisistaan käyttämättä tietokannan id:tä. Logon luo käyttäjätunnuksen senseille, joka saa oletuksena salasanan 'newuser'.
+Senseis kuvaa harjoituksia vetäviä senseitä. Senseille on ominaista nimi sekä uniikki logon, jolla nimikaimat voidaan erottaa toisistaan käyttämättä tietokannan id:tä. Logon luo käyttäjätunnuksen senseille, joka saa oletuksena salasanan 'newuser'. Sensein luominen ja muokkaaminen validoi, että logon on uniikki ja tiedot ovat 3–15 merkkiä.
 
 Senseitä voidaan muokata luettelon Edit-painikkeesta. Ainoastaan muuttuneet parametrit toteutetaan.
 
 ## Belts
 
-Belts kuvaa vyöarvoja tai muuta vastaavaa harjoitusryhmän tunnistetta. Vyöarvolle on ominaista uniikki teksti. Koska vyöarvoja on vain n kappaletta, vyöarvot luultavasti asetetaan tietokantaan ensimmäisellä kaudella ja sen jälkeen jätetään sellaiseksi. Tämän takia vyötä ei voi muokata, vaan mahdollinen kirjoitusvirhe korjataan poistamalla vyö ja lisäämällä uusi.
+Belts kuvaa vyöarvoja tai muuta vastaavaa harjoitusryhmän tunnistetta. Vyöarvolle on ominaista uniikki teksti. Koska vyöarvoja on vain n kappaletta, vyöarvot luultavasti asetetaan tietokantaan ensimmäisellä kaudella ja sen jälkeen jätetään sellaiseksi. Tämän takia vyötä ei voi muokata, vaan mahdollinen kirjoitusvirhe korjataan poistamalla vyö ja lisäämällä uusi. Belt validoidaan uniikiksi ja 3–15 merkin pituiseksi.
 
 ## Topics
 
-Topics kuvaa karateharjoitukseen lisättävää teemaa tai muuta aihetta, joka liittyy harjoitustuntiin. Tämä voi esim. olla gyakuzuki (vastakäden lyönti), jokin liikesarja tai muu vastaava aihealue, jolla harjoituksia voi indeksoida. Karateka voi arvioida halukkuuttaan osallistua harjoitukseen yhden tai useamman harjoitukseen liittyvän teeman perusteella.
+Topics kuvaa karateharjoitukseen lisättävää teemaa tai muuta aihetta, joka liittyy harjoitustuntiin. Tämä voi esim. olla gyakuzuki (vastakäden lyönti), jokin liikesarja tai muu vastaava aihealue, jolla harjoituksia voi indeksoida. Karateka voi arvioida halukkuuttaan osallistua harjoitukseen yhden tai useamman harjoitukseen liittyvän teeman perusteella. Topic validoidaan uniikiksi ja 3–30 merkkiä pitkäksi.
 
 Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvaus kirjataan tietokantaan.
 
 ## Changelog
+
+### 12.4.2020
+
+Lisätty validointeja kenttien muokkauksiin ja luomisiin. Tietokantaan ei enää voi syöttää uniikeiksi tarkoitettuja tietoja.
+
+Sensei voi jatkossa muokata vain omia tietojaan, vaikka senseit voivat poistaa toisiaan. Lisäksi superuser 'genki' voi muokata keitä tahansa.
 
 ### 2.4.2020
 

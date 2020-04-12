@@ -48,7 +48,7 @@ try:
 except:
     pass
 
-pw_hashed = hasher("sudo3")
+pw_hashed = "$2b$12$JeYUxbSj8d0kqu406NZv3OhUu7Ln32nPj2twGnS8LXzhcAsDkF7ty" #hasher("sudo3")
 
 user = User.query.filter_by(username="genki").first()
 if not user:

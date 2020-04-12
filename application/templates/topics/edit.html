@@ -21,6 +21,11 @@
   </table>
   <h3>Edit</h3>
 
+  <ul>
+    {% if error %}
+      {{ error }}
+    {% endif %}
+  </ul>
   <form method="POST" action="{{ url_for('mod_topics', id=topics.id) }}">
     <label for="desc">New description:</label>
     <input type="text" name="desc"/>

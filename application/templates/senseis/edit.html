@@ -18,7 +18,9 @@
     
 
   </table>
+  {% if current_user.username == senseis.logon or current_user.username == 'genki' %}
   <h3>Edit</h3>
+  {{ error }}
   <form method="POST" action="{{ url_for('mod_senseis', id=senseis.id) }}">
     <label for="name">New name:</label>
     <input type="text" name="name"/>
@@ -27,6 +29,7 @@
     <input type="hidden" name="id" value="{{ senseis.id }}"/>
     <input type="submit" class="btn btn-primary btn-sm" value="Change"/>
   </form>
+  {% endif %}
 
   <p>Do you wish to delete this sensei? You cannot undo this!</p>
   <form method="POST" action="{{ url_for('senseis_del', id=senseis.id) }}">

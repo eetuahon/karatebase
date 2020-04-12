@@ -25,11 +25,19 @@ def events_form():
 @login_required
 def events_create():
     form = EventForm(request.form)
+    prior_event = Events.query.filter_by(name=form.name.data).first()
+
+    if not form.validate():
+        return render_template("events/new.html", form = form)
+    elif prior_event:
+        form.name.errors.append("This name already exists")
+        return render_template("events/new.html", form = form)
+
     d = form.day.data
     if d == None:
         d = datetime.datetime.now().strftime("%Y-%m-%d") # formerly "%d.%m.%Y"
     else:
-        d = d.strftime("%Y.%m.%d") # "%d.%m.%Y"
+        d = d.strftime("%Y-%m-%d") # "%d.%m.%Y"
     e = Events(form.name.data, d, form.time.data, form.info.data)
 
     db.session().add(e)
@@ -136,6 +144,26 @@ def mod_events(id):
     t = form.time.data
     i = form.info.data
     e = Events.query.get(id)
+    prior_event = Events.query.filter_by(name=form.name.data).first()
+    same = (e == prior_event)
+
+    if (len(name) > 15 or (len(name) > 0 and len(name.strip()) < 3)) and (len(t) > 15 or (len(t) > 0 and len(t.strip()) < 3)):
+        error = "Name and time should be between 3 and 15 char"
+        tuplet = edit_tuplet(id)
+        return render_template("events/edit.html", events = tuplet[0], form = EventForm(), belts = tuplet[1], not_belts = tuplet[2], topics = tuplet[3], not_topics = tuplet[4], senseis = tuplet[5], not_senseis = tuplet[6], error = error)
+    elif (len(name) > 15 or (len(name) > 0 and len(name.strip()) < 3)):
+        error = "Name should be between 3 and 15 char"
+        tuplet = edit_tuplet(id)
+        return render_template("events/edit.html", events = tuplet[0], form = EventForm(), belts = tuplet[1], not_belts = tuplet[2], topics = tuplet[3], not_topics = tuplet[4], senseis = tuplet[5], not_senseis = tuplet[6], error = error)
+    elif prior_event and not same:
+        error = "Event name already exists"
+        tuplet = edit_tuplet(id)
+        return render_template("events/edit.html", events = tuplet[0], form = EventForm(), belts = tuplet[1], not_belts = tuplet[2], topics = tuplet[3], not_topics = tuplet[4], senseis = tuplet[5], not_senseis = tuplet[6], error = error)
+    elif (len(t) > 15 or (len(t) > 0 and len(t.strip()) < 3)):
+        error = "Time should be between 3 and 15 char"
+        tuplet = edit_tuplet(id)
+        return render_template("events/edit.html", events = tuplet[0], form = EventForm(), belts = tuplet[1], not_belts = tuplet[2], topics = tuplet[3], not_topics = tuplet[4], senseis = tuplet[5], not_senseis = tuplet[6], error = error)
+
     if d != "" and d == None:
         e.day = datetime.datetime.now().strftime("%Y-%m-%d") #formerly "%d.%m.%Y"
     elif d != "":
@@ -158,3 +186,13 @@ def events_del(id):
     db.session().commit()
   
     return redirect(url_for("events_index"))
+
+def edit_tuplet(id):
+    e = Events.query.get(id)
+    belts = Events.belts_for_event_id(id)
+    nb = Events.belts_for_event_not_id(id)
+    t = Events.topics_for_event_id(id)
+    nt = Events.topics_for_event_not_id(id)
+    s = Events.senseis_for_event_id(id)
+    ns = Events.senseis_for_event_not_id(id)
+    return (e, belts, nb, t, nt, s, ns)
