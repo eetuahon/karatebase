@@ -2,20 +2,23 @@
 
 {% block body %}
 <h3>Current info</h3>
-  <table>
+  <table class="table">
+    <thead class="thead-light">
     <tr>
       <th>Belt</th>
+      {% if current_user.username == 'genki' %}
       <th>id</th>
-      <th></th>
+      {% endif %}
     </tr>
-
+    </head>
+    <tbody>
     <tr>
       <td>{{ belts.belt }}</td>
+      {% if current_user.username == 'genki' %}
       <td>{{ belts.id }}</td>
-      <td>
-      </td>
+      {% endif %}
     </tr>
-    
+    </tbody>
 
   </table>
   <h3>Edit</h3>

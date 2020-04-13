@@ -1,7 +1,16 @@
 from flask import render_template
 from application import app
+from flask_login import login_required
+from application.models import Events
+import datetime
 
 @app.route("/")
 def index():
-    return render_template("index.html")
-
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    week = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+    e = Events.query.order_by(Events.day, Events.time).filter(Events.day >= today, Events.day < week).all()
+    for ev in e:
+        date_obj = datetime.datetime.strptime(ev.day, "%Y-%m-%d")
+        ev.day = date_obj.strftime("%a %d.%m.%Y")
+    no_t = Events.events_without_topic()
+    return render_template("index.html", events = e, no_topic = no_t)

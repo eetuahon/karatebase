@@ -26,7 +26,7 @@ def belts_create():
         form.belt.errors.append("Blanks don't count, have at least 3 char")
         return render_template("belts/new.html", form = form)
     elif prior_belt:
-        form.belt.errors.append("This belt already exists")
+        form.belt.errors.append("Such belt already exists")
         return render_template("belts/new.html", form = form)
 
     b = Belts(form.belt.data)

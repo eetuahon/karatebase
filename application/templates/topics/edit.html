@@ -2,28 +2,32 @@
 
 {% block body %}
 <h3>Current info</h3>
-  <table>
+  <table class="table">
+    <thead class="thead-light">
     <tr>
       <th>Topic</th>
+      {% if current_user.username == 'genki' %}
       <th>id</th>
-      <th></th>
+      {% endif %}
     </tr>
-
+    </thead>
+    <tbody>
     <tr>
       <td>{{ topics.desc }}</td>
+      {% if current_user.username == 'genki' %}
       <td>{{ topics.id }}</td>
-      <td>
-        
-      </td>
+      {% endif %}
     </tr>
-    
+    </tbody>
 
   </table>
   <h3>Edit</h3>
 
   <ul>
     {% if error %}
+    <div class="alert alert-warning" role="alert">
       {{ error }}
+    </div>
     {% endif %}
   </ul>
   <form method="POST" action="{{ url_for('mod_topics', id=topics.id) }}">

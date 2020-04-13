@@ -1,27 +1,39 @@
 {% extends "layout.html" %}
 
 {% block body %}
-{{ error }}
+{% if error %}
+<div class="alert alert-warning" role="alert">
+  {{ error }}
+</div>
+{% endif %}
 <h3>Current info</h3>
-  <table>
+  <table class="table">
+    <thead class="thead-light">
     <tr>
       <th>Name</th>
       <th>Date & time</th>
       <th>Info</th>
+      {% if current_user.username == 'genki' %}
       <th>id</th>
+      {% endif %}
     </tr>
-
+    </thead>
+    <tbody>
     <tr>
       <td>{{ events.name }}</td>
-      <td>{{ events.day }} {{ events.time }}</td>
+      <td>{{ events.day }}<br>{{ events.time }}</td>
       <td>{{ events.info }}</td>
+      {% if current_user.username == 'genki' %}
       <td>{{ events.id }}</td>
+      {% endif %}
     </tr>
-    
+    </tbody>
 
   </table>
   <h3>Belts</h3>
-  <table>
+  <table class="table">
+    <col width="50%">
+    <col width="50%">
     <tr>
       <th>Selected</th>
       <th>Unselected</th>
@@ -31,7 +43,7 @@
       <td>{% for b in events.belt_list() %}
 
         <form method="POST" action="{{ url_for('del_belt', id=events.id, b_id=b.b_id) }}">
-          <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ b.belt }}"/>
+          <input type="submit" class="btn btn-secondary btn-sm" value="Remove {{ b.belt }}"/>
         </form>
 
         {% endfor %}</td>
@@ -45,7 +57,9 @@
     </tr>
   </table>
   <h3>Topics</h3>
-  <table>
+  <table class="table">
+    <col width="50%">
+    <col width="50%">
     <tr>
       <th>Selected</th>
       <th>Unselected</th>
@@ -55,7 +69,7 @@
       <td>{% for t in events.topic_list() %}
 
         <form method="POST" action="{{ url_for('del_topic', id=events.id, t_id=t.t_id) }}">
-          <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ t.desc }}"/>
+          <input type="submit" class="btn btn-secondary btn-sm" value="Remove {{ t.desc }}"/>
         </form>
 
         {% endfor %}</td>
@@ -69,7 +83,9 @@
     </tr>
   </table>
   <h3>Senseis</h3>
-  <table>
+  <table class="table">
+    <col width="50%">
+    <col width="50%">
     <tr>
       <th>Selected</th>
       <th>Unselected</th>
@@ -79,7 +95,7 @@
       <td>{% for s in events.sensei_list() %}
 
         <form method="POST" action="{{ url_for('del_sensei', id=events.id, s_id=s.s_id) }}">
-          <input type="submit" class="btn btn-primary btn-sm" value="Remove {{ s.name }}"/>
+          <input type="submit" class="btn btn-secondary btn-sm" value="Remove {{ s.name }}"/>
         </form>
 
         {% endfor %}</td>
@@ -94,7 +110,7 @@
   </table>
   <h3>Edit</h3>
   <form method="POST" action="{{ url_for('mod_events', id=events.id) }}">
-    <table>
+    <table class="table">
       <tr>
   <td>
     {{ form.name.label }}

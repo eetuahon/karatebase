@@ -32,6 +32,12 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ## Changelog
 
+### 13.4.2020
+
+Auktorisointi lisätty eiliseen kieltoon muokata muiden tietoja (pl. pääkäyttäjä genki). Bootstrap-ulkoasua päivitetty myös tietokannan tietojen muokaamiseen. Tietokannassa oleva Id näkyy jatkossa vain pääkäyttäjä (lue: devaaja) genkille.
+
+Etusivulla näkyy jatkossa seuraavan 7 päivän harjoitukset. Kirjautunut kättäjä näkee lisäksi eventit (myös muut kuin 7 päivän sisällä), joista puuttuu aihe. Varoitus ei kuitenkaan enää huomioi menneitä tapahtumia.
+
 ### 12.4.2020
 
 Lisätty validointeja kenttien muokkauksiin ja luomisiin. Tietokantaan ei enää voi syöttää uniikeiksi tarkoitettuja tietoja.

@@ -1,5 +1,6 @@
 from application import db
 from sqlalchemy.sql import text
+import datetime
 
 beltevents = db.Table('beltevents',
     db.Column('belt_id', db.Integer, db.ForeignKey('belts.id'), primary_key=True),
@@ -59,20 +60,20 @@ class Events(db.Model):
         self.time = time
         self.info = info
 
-#    @staticmethod
-#    def belts_for_event():
-#        stmt = text("SELECT B.belt, B.id, E.id FROM Belts B"
-#                    " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
-#                    " LEFT JOIN Events E ON E.id = BE.event_id ORDER BY LOWER(B.belt)")
-##        res = db.engine.execute(stmt)
- # 
- #       response = []
- #       for row in res:
- ##           response.append({"belt":row[0], "b_id":row[1], "needed_id":row[2]})
- #       
- #       return response
+#    #@staticmethod
+#    def events_next_7_day():
+#        today = datetime.datetime.now().strftime("%Y-%m-%d")
+#        week = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+#
+#        stmt = text("SELECT * FROM Events WHERE Day BETWEEN :a AND :b").params(a=today, b=week)
+#        res = db.engine.execute(stmt)
+#
+#        response = []
+#        for row in res:
+#            response.append({"name":row[1], "day":row[2], "time":row[3], "info":row[4], "id":row[0]})
+#        
+#        return response
 
-    #@staticmethod
     def belt_list(self):
         stmt = text("SELECT B.belt, B.id FROM Belts B"
                     " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
@@ -85,7 +86,6 @@ class Events(db.Model):
         
         return response
 
-    #@staticmethod
     def non_belt_list(self):
         stmt = text("SELECT B.belt, B.id FROM Belts B"
                     " WHERE B.id NOT IN (SELECT Bb.id FROM Belts Bb"
@@ -111,20 +111,6 @@ class Events(db.Model):
                     " WHERE belt_id = :a AND event_id = :b").params(a=b_id, b=id)
         res = db.engine.execute(stmt)
 
-#    @staticmethod
-#    def topics_for_event():
-##        stmt = text("SELECT T.desc, T.id, E.id FROM Topics T"
- #                   " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
- #                   " LEFT JOIN Events E ON E.id = TE.event_id ORDER BY LOWER(T.desc)")
- #       res = db.engine.execute(stmt)
-#  
-#        response = []
-#        for row in res:
-#            response.append({"desc":row[0], "t_id":row[1], "needed_id":row[2]})
-#        
-#        return response
-
-#    @staticmethod
     def topic_list(self):
         stmt = text("SELECT T.desc, T.id FROM Topics T"
                     " LEFT JOIN topicevents TE ON T.id = TE.topic_id"
@@ -137,7 +123,6 @@ class Events(db.Model):
         
         return response
 
-#    @staticmethod
     def non_topic_list(self):
         stmt = text("SELECT T.desc, T.id FROM Topics T"
                     " WHERE T.id NOT IN (SELECT Tt.id FROM Topics Tt"
@@ -202,9 +187,10 @@ class Events(db.Model):
 
     @staticmethod
     def events_without_topic():
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
         stmt = text("SELECT E.day, E.time, E.id"
                     " FROM Events E LEFT JOIN topicevents TE ON"
-                    " E.id = TE.event_id GROUP BY E.id, E.day, E.time having COUNT(TE.topic_id) = 0 ORDER BY E.day, LOWER(E.time)")
+                    " E.id = TE.event_id WHERE E.day >= :a GROUP BY E.id, E.day, E.time having COUNT(TE.topic_id) = 0 ORDER BY E.day, LOWER(E.time)").params(a=today)
         res = db.engine.execute(stmt)
   
         response = []

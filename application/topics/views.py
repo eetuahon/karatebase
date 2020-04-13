@@ -25,7 +25,7 @@ def topics_create():
         form.desc.errors.append("Blanks don't count, have at least 3 char")
         return render_template("topics/new.html", form = form)
     elif prior_topic:
-        form.desc.errors.append("This topic already exists")
+        form.desc.errors.append("Such topic description already exists")
         return render_template("topics/new.html", form = form)
 
     t = Topics(form.desc.data.lower().rstrip())
@@ -55,7 +55,7 @@ def mod_topics(id):
     elif len(form.desc.data.strip()) < 3:
         return render_template("topics/edit.html", topics = Topics.query.get(id), error = "Blanks don't count!")
     elif prior_topic and not same:
-        return render_template("topics/edit.html", topics = Topics.query.get(id), error = "This topic already exists")
+        return render_template("topics/edit.html", topics = Topics.query.get(id), error = "Such topic description already exists")
     else:
         t.desc = descr
         db.session().commit()

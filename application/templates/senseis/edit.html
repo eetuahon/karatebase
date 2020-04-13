@@ -2,25 +2,35 @@
 
 {% block body %}
 <h3>Current info</h3>
-  <table>
+  <table class="table">
+    <thead class="thead-light">
     <tr>
       <th>Sensei</th>
       <th>logon</th>
+      {% if current_user.username == 'genki' %}
       <th>id</th>
+      {% endif %}
     </tr>
-
+  </thead>
+  <tbody>
     <tr>
       <td>{{ senseis.name }}</td>
       <td>{{ senseis.logon }}</td>
+      {% if current_user.username == 'genki' %}
       <td>{{ senseis.id }}
       </td>
+      {% endif %}
     </tr>
-    
+  </tbody>  
 
   </table>
   {% if current_user.username == senseis.logon or current_user.username == 'genki' %}
   <h3>Edit</h3>
-  {{ error }}
+  {% if error %}
+    <div class="alert alert-warning" role="alert">
+      {{ error }}
+    </div>
+  {% endif %}
   <form method="POST" action="{{ url_for('mod_senseis', id=senseis.id) }}">
     <label for="name">New name:</label>
     <input type="text" name="name"/>

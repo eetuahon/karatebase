@@ -1,7 +1,64 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <p>
+{% if current_user.is_authenticated %}
+{% if no_topic|length > 0 %}
+<h3>Topic missing for the following events: {{ no_topic|length }}</h3>
+{% for e in no_topic %}
+<ul>
+  <li>{{ e.day }} {{ e.time }} <a href="{{ url_for('edit_events', id=e.id) }}">Add topic</a></li>
+</ul>
+{% endfor %}
+{% endif %}
+{% endif %}
+  <h1>
     Hello karate world! Kiai!
-  </p>
+  </h1>
+  <h3>Upcoming events for the next week:</h3>
+  <table class="table">
+    <thead class="thead-light">
+    <tr>
+      <th>Date & time</th>
+      <th>Sensei</th>
+      <th>Belts</th>
+      <th>Topics</th>
+      <th>Additional Info</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for e in events %}
+    <tr>
+      <td>{{ e.day }}<br>{{ e.time }}</td>
+      <td>{% for s in e.sensei_list() %}
+        {{ s.name }}
+        {% if not loop.last %}
+        <br>
+        {%  endif %}
+        {% endfor %}</td>
+      <td>{% for b in e.belt_list() %}
+        {{ b.belt }}
+        {% if not loop.last %}
+        <br>
+        {%  endif %}
+        {% endfor %}
+      </td>
+      <td>{% for t in e.topic_list() %}
+        {{t.desc}}
+        {% if not loop.last %}
+            ,
+        {% endif %}
+    {% endfor %}</td>
+      <td>{{ e.info }}</td>
+      <td>
+        {% if current_user.is_authenticated %}
+        <form method="POST" action="{{ url_for('edit_events', id=e.id) }}">
+          <input type="submit" class="btn btn-primary btn-sm" value="Edit"/>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
 {% endblock %}

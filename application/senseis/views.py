@@ -1,6 +1,6 @@
-from application import app, db
+from application import app, db, login_required, login_manager
 from flask import redirect, render_template, request, url_for
-from flask_login import login_required
+from flask_login import current_user
 from application.models import Senseis
 from application.forms import SenseiForm
 from application.auth.models import User
@@ -49,10 +49,13 @@ def edit_senseis(id):
 @app.route("/senseis/ed/<id>", methods=["POST"])
 @login_required
 def mod_senseis(id):
+    s = Senseis.query.get(id)
+    if not (current_user.id == s.id or current_user.username == 'genki'):
+        return login_manager.unauthorized()
+
     form = SenseiForm(request.form)
     name = form.name.data
     l = form.logon.data.lower().strip()
-    s = Senseis.query.get(id)
     prior_sensei = Senseis.query.filter_by(logon=l).first()
     same = (s == prior_sensei)
 
