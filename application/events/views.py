@@ -1,5 +1,5 @@
 from application import app, db
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required
 from application.models import Events
 from application.forms import EventForm
@@ -42,7 +42,7 @@ def events_create():
 
     db.session().add(e)
     db.session().commit()
-  
+    flash("New event created on {}".format(d))
     return redirect(url_for("events_index"))
 
 @app.route("/events/<id>", methods=["POST", "GET"])
@@ -144,13 +144,14 @@ def mod_events(id):
     if len(i) > 0:
         e.info = i
     db.session().commit()
+    flash("Event '{}' on {} was modified".format(e.name, e.day))
     return redirect(url_for("events_index"))
 
 @app.route("/events/del/<id>", methods=["POST"])
 @login_required
 def events_del(id):
     t = Events.query.get(id)
+    flash("Event '{}' on {} was deleted".format(t.name, t.day))
     db.session().delete(t)
     db.session().commit()
-  
     return redirect(url_for("events_index"))

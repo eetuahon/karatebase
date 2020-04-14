@@ -2,6 +2,15 @@
 
 {% block body %}
 {% if current_user.is_authenticated %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 {% if no_events|length > 0 %}
 <h3>No set practices for the following belts: {{ no_events|length }}</h3>
 {% for b in no_events %}

@@ -1,5 +1,5 @@
 from application import app, db
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required
 from application.models import Belts, Events
 from application.forms import BeltForm
@@ -32,7 +32,7 @@ def belts_create():
     b = Belts(form.belt.data)
     db.session().add(b)
     db.session().commit()
-  
+    flash("Belt '{}' was created".format(b.belt))
     return redirect(url_for("belts_index"))
 
 @app.route("/belts/<id>", methods=["POST"])
@@ -57,7 +57,7 @@ def edit_belts(id):
 @login_required
 def belts_del(id):
     b = Belts.query.get(id)
-
+    flash("Belt '{}' was deleted".format(b.belt))
     db.session().delete(b)
     db.session().commit()
   

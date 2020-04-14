@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user
 
 from application import app
@@ -25,6 +25,7 @@ def auth_login():
                                error = "No such username or password")
 
     login_user(user)
+    flash("Otagai ni rei, sensei ni rei, welcome to the dojo {}".format(user.name))
     return redirect(url_for("index"))
 
 @app.route("/auth/logout")

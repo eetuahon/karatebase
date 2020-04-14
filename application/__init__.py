@@ -56,7 +56,6 @@ from application.events import views
 from application.auth import models, views
 
 from application.auth.models import User
-from application.auth.hasher import hasher, checker
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -67,13 +66,13 @@ try:
 except:
     pass
 
-pw_hashed = "$2b$12$JeYUxbSj8d0kqu406NZv3OhUu7Ln32nPj2twGnS8LXzhcAsDkF7ty" #hasher("sudo3")
+pw_hashed = "$2b$12$JeYUxbSj8d0kqu406NZv3OhUu7Ln32nPj2twGnS8LXzhcAsDkF7ty"
 
 user = User.query.filter_by(username="genki").first()
 if not user:
     admin = User("Genki Sudo", "genki", pw_hashed)
     db.session.add(admin)
     db.session.commit()
-elif checker(user.password, "sudo3") == False:
+elif user.password != pw_hashed:
     user.password = pw_hashed
     db.session.commit()

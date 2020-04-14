@@ -1,5 +1,5 @@
 from application import app, db, login_required, login_manager
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for, flash
 from flask_login import current_user
 from application.models import Senseis
 from application.forms import SenseiForm
@@ -37,7 +37,7 @@ def senseis_create():
     db.session().add(s)
     db.session().add(u)
     db.session().commit()
-  
+    flash("Sensei {} ni rei, {} has entered the dojo, kiai!".format(s.name, s.name))
     return redirect(url_for("senseis_index"))
 
 
@@ -79,6 +79,7 @@ def mod_senseis(id):
         s.logon = l
         user.username = l
     db.session().commit()
+    flash("Sensei {} was modified".format(s.name))
     return redirect(url_for("senseis_index"))
 
 @app.route("/senseis/del/<id>", methods=["POST"])
@@ -87,7 +88,7 @@ def senseis_del(id):
     t = Senseis.query.get(id)
     logon = t.logon
     user = User.query.filter_by(username=logon).first()
-
+    flash("Sensei {} has left the dojo".format(t.name))
     db.session().delete(t)
     db.session().delete(user)
     db.session().commit()

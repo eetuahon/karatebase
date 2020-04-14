@@ -1,5 +1,5 @@
 from application import app, db
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required
 from application.models import Topics
 from application.forms import TopicForm
@@ -29,10 +29,9 @@ def topics_create():
         return render_template("topics/new.html", form = form)
 
     t = Topics(form.desc.data.lower().rstrip())
-    if len(t.desc) > 0:
-        db.session().add(t)
-        db.session().commit()
-  
+    db.session().add(t)
+    db.session().commit()
+    flash("Master {} to earn black belt, topic added".format(t.desc))
     return redirect(url_for("topics_index"))
 
 @app.route("/topics/<id>", methods=["POST"])
@@ -59,13 +58,14 @@ def mod_topics(id):
     else:
         t.desc = descr
         db.session().commit()
+        flash("Topic {} was modified".format(t.desc))
         return redirect(url_for("topics_index"))
 
 @app.route("/topics/del/<id>", methods=["POST"])
 @login_required
 def topics_del(id):
     t = Topics.query.get(id)
-
+    flash("{} is no longer needed for the black belt".format(t.desc).capitalize())
     db.session().delete(t)
     db.session().commit()
   

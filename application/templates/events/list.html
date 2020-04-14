@@ -2,6 +2,15 @@
 
 {% block body %}
 {% if current_user.is_authenticated %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 {% if no_topic|length > 0 %}
 <h3>Topic missing for the following events: {{ no_topic|length }}</h3>
 {% for e in no_topic %}
