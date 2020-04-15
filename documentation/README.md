@@ -32,6 +32,18 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ## Changelog
 
+### 15.4.2020
+
+Käytettävyyttä parannettu: kirjautumaton käyttäjä ei enää näe menneitä tapahtumia Events-listalla. Uusi tapahtuma luodaan nyt yläreunasta, jottei (mahdollisesti) pitkän luettelon loppuun tarvitse kelata. Auth-virheiden ulkonäkö yhtenäistetty flash-muotoiluihin mutta virheet näytetään punaisella.
+
+Sensei voi nyt vaihtaa salasanaansa, pääkäyttäjä 'genki' luonnollisestikaan ei voi.
+
+Käyttöoppaan runko lisätty.
+
+### 14.4.2020
+
+Lisätty positiivisia varoituksia (flash) onnistuneista toimenpiteistä: sisäänkirjautuminen, asioiden luominen, muokkaus, poistaminen.
+
 ### 13.4.2020
 
 Auktorisointi lisätty eiliseen kieltoon muokata muiden tietoja (pl. pääkäyttäjä genki). Bootstrap-ulkoasua päivitetty myös tietokannan tietojen muokaamiseen. Tietokannassa oleva Id näkyy jatkossa vain pääkäyttäjä (lue: devaaja) genkille.

@@ -6,27 +6,35 @@
   {{ error }}
 </div>
 {% endif %}
-<form method="POST" action="{{ url_for('auth_login') }}">
+<form method="POST" action="{{ url_for('change_pw') }}">
   <table class="table">
     <tr>
       <td>
-	{{ form.username.label }}
+	{{ form.old.label }}
       </td>
       <td>
-	{{ form.username }}
+	{{ form.old }}
       </td>
     </tr>
     <tr>
       <td>
-	{{ form.password.label }}
+	{{ form.new1.label }}
       </td>
       <td>
-	{{ form.password }}
+	{{ form.new1 }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+	{{ form.new2.label }}
+      </td>
+      <td>
+	{{ form.new2 }}
       </td>
     </tr>
     <tr>
       <td colspan="2">
-	<input type="submit" class="btn btn-primary" value="Login"/>
+	<input type="submit" class="btn btn-primary" value="Change pw"/>
       </td>
     </tr>
 </form>

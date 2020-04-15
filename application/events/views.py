@@ -1,6 +1,6 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 from application.models import Events
 from application.forms import EventForm
 import datetime
@@ -9,7 +9,11 @@ from sqlalchemy.sql.expression import select
 
 @app.route("/events", methods=["GET"])
 def events_index():
-    e = Events.query.order_by(Events.day, Events.time).all()
+    if current_user.is_authenticated:
+        e = Events.query.order_by(Events.day, Events.time).all()
+    else:
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        e = Events.query.order_by(Events.day, Events.time).filter(Events.day >= today).all()
     for ev in e:
         date_obj = datetime.datetime.strptime(ev.day, "%Y-%m-%d")
         ev.day = date_obj.strftime("%a %d.%m.%Y")

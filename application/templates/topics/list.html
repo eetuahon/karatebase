@@ -10,6 +10,9 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+{% if current_user.is_authenticated %}
+<a href="{{ url_for('topics_form') }}">Add a topic</a>
+{% endif %}
   <table class="table">
     <thead class="thead-light">
     <tr>
@@ -32,7 +35,5 @@
     {% endfor %}
   </tbody>
   </table>
-  {% if current_user.is_authenticated %}
-  <a href="{{ url_for('topics_form') }}">Add a topic</a>
-  {% endif %}
+
 {% endblock %}
