@@ -24,7 +24,11 @@ Alla lueteltavat käyttäjän toimenpiteet edellyttävät myös ilman erillistä
 
 #### Uuden tapahtuman luominen
 
-Uusi tapahtuma luodaan tapahtumaluettelosta ("Events")
+Uusi tapahtuma luodaan tapahtumaluettelosta ("Events") valitsemalla tapahtumataulukon yläreunasta "Add an event", jolloin käyttäjä saa lomakeen tapahtumien luomiseksi. Uudelle tapahtumalle syötetään lomakkeessa:
+1. Name on tapahtumalle tarkoitettu uniikki nimi, joka on 3–30 merkkiä pitkä. Nimi on tapahtumalle pakollinen, ja sen tarkoituksena on yksilöidä tapahtumat senseiden muussa keskustelussa. Senseit voivat esimerkiksi sopia samaan aikaan eri tatameilla järjestettävien tapahtumien järjestämisestä käyttämällä tapahtuman nimeä.
+2. Day on tapahtumalle suunniteltu päivämäärä. Päivämäärä on annettava muodossa dd.mm.yyyy eli suomalaisen käytännön mukaisesti. Jos syötettä ei voida tulkita yksiselitteiseksi päivämääräksi, tapahtuma luodaan tapahtumaan tänään.
+3. Time on tapahtumalle suunniteltu ajankohta, joka voi olla 3–30 merkkiä pitkä. Tietoa ei validoida testein, joten ajankohta voi olla karateseuran käytännön mukaisesti esim. "19:00", "19:00–20:15" tai "tapahtuman x jälkeen". Tekstinä ilmoitetuissa ajoissa on otettava huomioon, että harjoitukset eivät välttämättä listaudu kronologisesti näkymässä.
+4. Info on tapahtumalle tarkoitettu lisätieto, joka voi olla esimerkiksi "harjoituksissa tarvitaan nyrkkeilyhanskat" tai paikkatieto "tatami 2".
 
 ### Senseiden toimenpiteet
 

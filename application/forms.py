@@ -21,9 +21,9 @@ class TopicForm(FlaskForm):
         csrf = False
 
 class EventForm(FlaskForm):
-    name = StringField("Name", [validators.Length(min=3, max=15)])
+    name = StringField("Name", [validators.Length(min=3, max=30)])
     day = DateTimeField("Day", format='%d.%m.%Y')
-    time = StringField("Time", [validators.Length(min=3, max=15)])
+    time = StringField("Time", [validators.Length(min=3, max=30)])
     info = StringField("Info")
 
     class Meta:

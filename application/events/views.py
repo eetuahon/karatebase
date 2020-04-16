@@ -10,6 +10,7 @@ from sqlalchemy.sql.expression import select
 @app.route("/events", methods=["GET"])
 def events_index():
     if current_user.is_authenticated:
+        delete_old_events()
         e = Events.query.order_by(Events.day, Events.time).all()
     else:
         today = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -123,17 +124,17 @@ def mod_events(id):
     prior_event = Events.query.filter_by(name=form.name.data).first()
     same = (e == prior_event)
 
-    if (len(name) > 15 or (len(name) > 0 and len(name.strip()) < 3)) and (len(t) > 15 or (len(t) > 0 and len(t.strip()) < 3)):
-        error = "Name and time should be between 3 and 15 char"
+    if (len(name) > 30 or (len(name) > 0 and len(name.strip()) < 3)) and (len(t) > 30 or (len(t) > 0 and len(t.strip()) < 3)):
+        error = "Name and time should be between 3 and 30 char"
         return render_template("events/edit.html", events = e, form = EventForm(), error = error)
-    elif (len(name) > 15 or (len(name) > 0 and len(name.strip()) < 3)):
-        error = "Name should be between 3 and 15 char"
+    elif (len(name) > 30 or (len(name) > 0 and len(name.strip()) < 3)):
+        error = "Name should be between 3 and 30 char"
         return render_template("events/edit.html", events = e, form = EventForm(), error = error)
     elif prior_event and not same:
         error = "Event name already exists"
         return render_template("events/edit.html", events = e, form = EventForm(), error = error)
-    elif (len(t) > 15 or (len(t) > 0 and len(t.strip()) < 3)):
-        error = "Time should be between 3 and 15 char"
+    elif (len(t) > 30 or (len(t) > 0 and len(t.strip()) < 3)):
+        error = "Time should be between 3 and 30 char"
         return render_template("events/edit.html", events = e, form = EventForm(), error = error)
 
     if d != "" and d == None:
@@ -159,3 +160,11 @@ def events_del(id):
     db.session().delete(t)
     db.session().commit()
     return redirect(url_for("events_index"))
+
+def delete_old_events():
+    wk = (datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+    events = Events.query.filter(Events.day < wk).all()
+
+    for e in events:
+        db.session().delete(e)
+    db.session().commit()

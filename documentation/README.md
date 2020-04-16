@@ -32,6 +32,12 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ## Changelog
 
+### 16.4.2020
+
+Sisäänkirjautumisen validointirajaa lievennetty, jotta lomake hyväksyy bruteforcella myös varmasti vääriä vaihtoehtoja.
+
+Yli viikkoa aikaisemmin menneet tapahtumat poistetaan automaattisesti tietokannasta, kun kirjautunut käyttäjä avaa Events-sivun.
+
 ### 15.4.2020
 
 Käytettävyyttä parannettu: kirjautumaton käyttäjä ei enää näe menneitä tapahtumia Events-listalla. Uusi tapahtuma luodaan nyt yläreunasta, jottei (mahdollisesti) pitkän luettelon loppuun tarvitse kelata. Auth-virheiden ulkonäkö yhtenäistetty flash-muotoiluihin mutta virheet näytetään punaisella.
