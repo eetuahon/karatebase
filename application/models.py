@@ -60,20 +60,6 @@ class Events(db.Model):
         self.time = time
         self.info = info
 
-#    #@staticmethod
-#    def events_next_7_day():
-#        today = datetime.datetime.now().strftime("%Y-%m-%d")
-#        week = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime("%Y-%m-%d")
-#
-#        stmt = text("SELECT * FROM Events WHERE Day BETWEEN :a AND :b").params(a=today, b=week)
-#        res = db.engine.execute(stmt)
-#
-#        response = []
-#        for row in res:
-#            response.append({"name":row[1], "day":row[2], "time":row[3], "info":row[4], "id":row[0]})
-#        
-#        return response
-
     def belt_list(self):
         stmt = text("SELECT B.belt, B.id FROM Belts B"
                     " LEFT JOIN beltevents BE ON B.id = BE.belt_id"
@@ -190,7 +176,8 @@ class Events(db.Model):
         today = datetime.datetime.now().strftime("%Y-%m-%d")
         stmt = text("SELECT E.day, E.time, E.id"
                     " FROM Events E LEFT JOIN topicevents TE ON"
-                    " E.id = TE.event_id WHERE E.day >= :a GROUP BY E.id, E.day, E.time having COUNT(TE.topic_id) = 0 ORDER BY E.day, LOWER(E.time)").params(a=today)
+                    " E.id = TE.event_id WHERE E.day >= :a GROUP BY E.id, E.day, E.time having"
+                    " COUNT(TE.topic_id) = 0 ORDER BY E.day, LOWER(E.time)").params(a=today)
         res = db.engine.execute(stmt)
   
         response = []
@@ -201,9 +188,10 @@ class Events(db.Model):
 
     @staticmethod
     def belts_without_event():
-        stmt = text("SELECT B.belt FROM Belts B LEFT JOIN"
-                    " beltevents BE ON B.id = BE.belt_id GROUP BY B.belt"
-                    " having COUNT(BE.event_id) = 0 ORDER BY LOWER(B.belt)")
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        stmt = text("SELECT B.belt FROM Belts B WHERE B.id NOT IN (SELECT Belts.id FROM Belts LEFT"
+                    " JOIN beltevents BE ON Belts.id = BE.belt_id LEFT JOIN Events E on BE.event_id = E.id"
+                    " WHERE E.day >= :a ) ORDER BY B.belt").params(a=today)
         res = db.engine.execute(stmt)
   
         response = []

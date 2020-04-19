@@ -4,7 +4,6 @@ from flask_login import current_user
 from application.models import Senseis
 from application.forms import SenseiForm
 from application.auth.models import User
-from application.auth.hasher import hasher, checker
 from sqlalchemy.sql import func
 
 @app.route("/senseis", methods=["GET"])
@@ -20,7 +19,7 @@ def senseis_form():
 @login_required
 def senseis_create():
     form = SenseiForm(request.form)
-    logon = form.logon.data.lower().rstrip()
+    logon = form.logon.data.lower().strip()
     prior_sensei = Senseis.query.filter_by(logon=logon).first()
 
     if logon == 'genki':
@@ -32,8 +31,9 @@ def senseis_create():
     elif prior_sensei:
         return render_template("senseis/new.html", form = SenseiForm(), error = "Logon already taken")
     
-    s = Senseis(form.name.data, form.logon.data.lower())
-    u = User(form.name.data, logon, hasher("newuser"))
+    hashed_pw = "$2b$12$6ODTbmHUOG1OCNlUnc8LfeeAr410v7UTfD/lwUWtp79ynmMPJtlWq"
+    s = Senseis(form.name.data, logon)
+    u = User(form.name.data, logon, hashed_pw)
     db.session().add(s)
     db.session().add(u)
     db.session().commit()

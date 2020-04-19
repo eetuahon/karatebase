@@ -19,6 +19,14 @@
 </ul>
 {% endfor %}
 {% endif %}
+{% if no_events|length > 0 %}
+<h3>No set practices for the following belts: {{ no_events|length }}</h3>
+{% for b in no_events %}
+<ul>
+  <li>{{ b.belt }}</li>
+</ul>
+{% endfor %}
+{% endif %}
 {% endif %}
   <h1>
     Hello karate world! Kiai!

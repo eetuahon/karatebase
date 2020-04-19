@@ -18,7 +18,7 @@ def auth_login():
         return render_template("auth/loginform.html", form = form,
                                error = "Input between 1 and 64 char expected")
 
-    user = User.query.filter_by(username=form.username.data.lower()).first()
+    user = User.query.filter_by(username=form.username.data.lower().strip()).first()
     if not user:
         return render_template("auth/loginform.html", form = form,
                                error = "No such username or incorrect password")

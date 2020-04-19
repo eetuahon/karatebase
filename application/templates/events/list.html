@@ -26,17 +26,25 @@
   <table class="table">
     <thead class="thead-light">
     <tr>
+      {% if current_user.is_authenticated %}
+      <th>Event name</th>
+      {% endif %}
       <th>Date & time</th>
       <th>Sensei</th>
       <th>Belts</th>
       <th>Topics</th>
       <th>Additional Info</th>
+      {% if current_user.is_authenticated %}
       <th></th>
+      {% endif %}
     </tr>
     </thead>
     <tbody>
     {% for e in events %}
     <tr>
+      {% if current_user.is_authenticated %}
+      <td>{{ e.name }}</td>
+      {% endif %}
       <td>{{ e.day }}<br>{{ e.time }}</td>
       <td>{% for s in e.sensei_list() %}
         {{ s.name }}
@@ -58,13 +66,13 @@
         {% endif %}
     {% endfor %}</td>
       <td>{{ e.info }}</td>
+      {% if current_user.is_authenticated %}
       <td>
-        {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_events', id=e.id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Edit"/>
         </form>
-        {% endif %}
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>
