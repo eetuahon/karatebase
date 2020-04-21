@@ -10,6 +10,7 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+<h3>Senseis</h3>
 {% if current_user.is_authenticated %}
 <a href="{{ url_for('senseis_form') }}">Add a sensei</a>
 {% endif %}

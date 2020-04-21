@@ -14,14 +14,16 @@ Ominaisuuksia:
 * sensei lisää / poistaa karatetunnille yhden tai useamman aiheen [x]
 * sensei lisää / poistaa vyöarvon, aiheen tai sensein [x]
 * sensei lisää tunnille yhden / useamman vyöarvon / ryhmän [x]
-* seuran jäsen katsoo kirjautumatta itselleen sopivat, lähiaikoina tulevat harjoitukset [ ]
-* seuran jäsen katsoo kirjautumatta kaikki itselleen sopivat harjoitukset [ ]
-* seuran jäsen katsoo kirjautumatta tietyn ~~päivän~~ _aiheen_ kaikki harjoitukset [ ]*
+* seuran jäsen katsoo kirjautumatta itselleen sopivat, lähiaikoina tulevat harjoitukset [x]
+* seuran jäsen katsoo kirjautumatta kaikki itselleen sopivat harjoitukset [x]
+* seuran jäsen katsoo kirjautumatta tietyn ~~päivän~~ _aiheen_ kaikki harjoitukset [x]*
 * seuran jäsen katsoo kirjautumatta kaikki harjoitukset kaikille [x]
 
 [16.4.2020]* triviaalin päivän harjoitusten selaaminen vaikuttaa epätodennäköiseltä vaihtoehdolta. Sen sijaan seuran jäsentä saattaisi kiinnostaa tietyn aihealueen harjoitusten tarkastelu sarjassamme, "milloin kannattaa olla paikalla, jos haluaa oppia potkuja".
 
 [Tietokantakaavio](https://dbdiagram.io/d/5e69648f4495b02c3b88216f) tai kuvana edellä [dbdiagram.png](https://github.com/eetuahon/karatebase/blob/master/dbdiagram.png)
+
+[SQL-skeemat](https://github.com/eetuahon/karatebase/blob/master/documentation/schemas.md)
 
 Herokussa [Karatebase-tsoha](http://karatebase-tsoha.herokuapp.com/)
 U/P tunnuksilla "genki"/"sudo3" taikka sensein henkilökohtainen logon + "newuser" (tai vaihdettu salasana)

@@ -1,12 +1,23 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required
-from application.models import Topics
+from application.models import Topics, Events
 from application.forms import TopicForm
+import datetime
 
 @app.route("/topics", methods=["GET"])
 def topics_index():
     return render_template("topics/list.html", topics = Topics.query.order_by(Topics.desc).all())
+
+@app.route("/topics/<id>/events", methods=["GET"])
+def list_topic_events(id):
+    topic = Topics.query.get(id)
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    e = Events.query.order_by(Events.day, Events.time).filter(Events.topics.contains(topic), Events.day >= today).all()
+    for ev in e:
+        date_obj = datetime.datetime.strptime(ev.day, "%Y-%m-%d")
+        ev.day = date_obj.strftime("%a %d.%m.%Y")
+    return render_template("topics/events_for_topic.html", events = e, Topic = topic)
 
 @app.route("/topics/new/")
 @login_required

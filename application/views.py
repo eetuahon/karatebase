@@ -15,6 +15,9 @@ def index():
     if current_user.is_authenticated:
         no_t = Events.events_without_topic()
         ne = Events.belts_without_event()
+        for ev in no_t:
+            date_obj = datetime.datetime.strptime(ev["day"], "%Y-%m-%d")
+            ev["day"] = date_obj.strftime("%a %d.%m.%Y")
     else:
         no_t = ""
         ne = ""

@@ -10,6 +10,7 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+<h3>Topics</h3>
 {% if current_user.is_authenticated %}
 <a href="{{ url_for('topics_form') }}">Add a topic</a>
 {% endif %}
@@ -17,20 +18,28 @@
     <thead class="thead-light">
     <tr>
       <th>Topic</th>
+      <th>Events in the future</th>
+      {% if current_user.is_authenticated %}
       <th></th>
+      {% endif %}
     </tr>
    </thead>
    <tbody>
     {% for t in topics %}
     <tr>
       <td>{{ t.desc }}</td>
+      <td>{% if t.count_topicevents() > 0 %}
+        <a href="{{ url_for('list_topic_events', id=t.id) }}">Events with {{ t.desc }} ({{ t.count_topicevents() }})</a>
+        {% else %}
+        <span class="text-muted">No events with {{ t.desc }} in the future</span>{% endif %}
+      </td>
+      {% if current_user.is_authenticated %}
       <td>
-        {% if current_user.is_authenticated %}
         <form method="POST" action="{{ url_for('edit_topics', id=t.id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Edit"/>
         </form>
-        {% endif %}
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>

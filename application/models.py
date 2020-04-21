@@ -24,12 +24,52 @@ class Topics(db.Model):
     def __init__(self, desc):
         self.desc = desc
 
+    def count_topicevents(self):
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        stmt = text("SELECT COUNT(TE.event_id) FROM Topicevents TE LEFT JOIN"
+                    " Events E ON TE.event_id = E.id WHERE TE.topic_id = :a"
+                    " AND E.day >= :b").params(a=self.id, b=today)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append(row[0])
+        
+        return response[0]
+
 class Belts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     belt = db.Column(db.Text, unique=True, nullable=True)
 
     def __init__(self, belt):
         self.belt = belt
+
+    def count_beltevents(self):
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        stmt = text("SELECT COUNT(BE.event_id) FROM Beltevents BE LEFT JOIN"
+                    " Events E ON BE.event_id = E.id WHERE BE.belt_id = :a"
+                    " AND E.day >= :b").params(a=self.id, b=today)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append(row[0])
+        
+        return response[0]
+
+    def count_14d_beltevents(self):
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        week = (datetime.datetime.now() + datetime.timedelta(days=14)).strftime("%Y-%m-%d")
+        stmt = text("SELECT COUNT(BE.event_id) FROM Beltevents BE LEFT JOIN"
+                    " Events E ON BE.event_id = E.id WHERE BE.belt_id = :a"
+                    " AND E.day >= :b AND E.day < :c").params(a=self.id, b=today, c=week)
+        res = db.engine.execute(stmt)
+  
+        response = []
+        for row in res:
+            response.append(row[0])
+        
+        return response[0]
 
 class Senseis(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -174,7 +214,7 @@ class Events(db.Model):
     @staticmethod
     def events_without_topic():
         today = datetime.datetime.now().strftime("%Y-%m-%d")
-        stmt = text("SELECT E.day, E.time, E.id"
+        stmt = text("SELECT E.day, E.time, E.id, E.name"
                     " FROM Events E LEFT JOIN topicevents TE ON"
                     " E.id = TE.event_id WHERE E.day >= :a GROUP BY E.id, E.day, E.time having"
                     " COUNT(TE.topic_id) = 0 ORDER BY E.day, LOWER(E.time)").params(a=today)
@@ -182,7 +222,7 @@ class Events(db.Model):
   
         response = []
         for row in res:
-            response.append({"day":row[0], "time":row[1], "id":row[2]})
+            response.append({"day":row[0], "time":row[1], "id":row[2], "name":row[3]})
         
         return response
 

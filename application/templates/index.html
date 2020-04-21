@@ -15,7 +15,7 @@
 <h3>Topic missing for the following events: {{ no_topic|length }}</h3>
 {% for e in no_topic %}
 <ul>
-  <li>{{ e.day }} {{ e.time }} <a href="{{ url_for('edit_events', id=e.id) }}">Add topic</a></li>
+  <li>{{ e.name }} ({{ e.day }}, {{ e.time }}) <a href="{{ url_for('edit_events', id=e.id) }}">Add topic</a></li>
 </ul>
 {% endfor %}
 {% endif %}

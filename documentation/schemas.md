@@ -8,12 +8,14 @@ CREATE TABLE topics (
 	PRIMARY KEY (id), 
 	UNIQUE ("desc")
 );
+
 CREATE TABLE belts (
 	id INTEGER NOT NULL, 
 	belt TEXT, 
 	PRIMARY KEY (id), 
 	UNIQUE (belt)
 );
+
 CREATE TABLE senseis (
 	id INTEGER NOT NULL, 
 	name TEXT, 
@@ -21,15 +23,17 @@ CREATE TABLE senseis (
 	PRIMARY KEY (id), 
 	UNIQUE (logon)
 );
+
 CREATE TABLE events (
 	id INTEGER NOT NULL, 
-	name TEXT, 
-	day TEXT, 
-	time TEXT, 
-	info TEXT, 
-	PRIMARY KEY (id), 
-	UNIQUE (name)
+    name TEXT, 
+    day TEXT, 
+    time TEXT, 
+    info TEXT, 
+    PRIMARY KEY (id), 
+    UNIQUE (name)
 );
+
 CREATE TABLE account (
 	id INTEGER NOT NULL, 
 	date_created DATETIME, 
@@ -39,6 +43,7 @@ CREATE TABLE account (
 	password VARCHAR(144) NOT NULL, 
 	PRIMARY KEY (id)
 );
+
 CREATE TABLE beltevents (
 	belt_id INTEGER NOT NULL, 
 	event_id INTEGER NOT NULL, 
@@ -46,6 +51,7 @@ CREATE TABLE beltevents (
 	FOREIGN KEY(belt_id) REFERENCES belts (id), 
 	FOREIGN KEY(event_id) REFERENCES events (id)
 );
+
 CREATE TABLE topicevents (
 	topic_id INTEGER NOT NULL, 
 	event_id INTEGER NOT NULL, 
@@ -53,6 +59,7 @@ CREATE TABLE topicevents (
 	FOREIGN KEY(topic_id) REFERENCES topics (id), 
 	FOREIGN KEY(event_id) REFERENCES events (id)
 );
+
 CREATE TABLE senseievents (
 	sensei_id INTEGER NOT NULL, 
 	event_id INTEGER NOT NULL, 

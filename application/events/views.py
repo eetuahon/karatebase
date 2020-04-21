@@ -12,13 +12,17 @@ def events_index():
     if current_user.is_authenticated:
         delete_old_events()
         e = Events.query.order_by(Events.day, Events.time).all()
+        no_t = Events.events_without_topic()
+        for ev in no_t:
+            date_obj = datetime.datetime.strptime(ev["day"], "%Y-%m-%d")
+            ev["day"] = date_obj.strftime("%a %d.%m.%Y")
     else:
         today = datetime.datetime.now().strftime("%Y-%m-%d")
         e = Events.query.order_by(Events.day, Events.time).filter(Events.day >= today).all()
+        no_t = ""
     for ev in e:
         date_obj = datetime.datetime.strptime(ev.day, "%Y-%m-%d")
         ev.day = date_obj.strftime("%a %d.%m.%Y")
-    no_t = Events.events_without_topic()
     return render_template("events/list.html", events = e, no_topic = no_t)
 
 @app.route("/events/new/")

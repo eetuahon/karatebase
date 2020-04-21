@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required
 from application.models import Belts, Events
 from application.forms import BeltForm
+import datetime
 
 @app.route("/belts", methods=["GET"])
 def belts_index():
@@ -40,18 +41,28 @@ def belts_create():
 def edit_belts(id):
     return render_template("belts/edit.html", belts = Belts.query.get(id))
 
-#@app.route("/belts/", methods=["POST"])
-#@login_required
-#def mod_belts(id):
-#    form = BeltForm(request.form)
-#    belt = form.belt.data
-#    if len(belt) == 0:
-#        return redirect(url_for("belts_index"))
-#    else:
-#        b = Belts.query.get(id)
-#        b.belt = belt
-#        db.session().commit()
-#        return redirect(url_for("belts_index"))
+@app.route("/belts/<id>/events", methods=["GET"])
+def list_belt_events(id):
+    belt = Belts.query.get(id)
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    week = (datetime.datetime.now() + datetime.timedelta(days=14)).strftime("%Y-%m-%d")
+    e = Events.query.order_by(Events.day, Events.time).filter(Events.belts.contains(belt), Events.day >= today, Events.day < week).all()
+    for ev in e:
+        date_obj = datetime.datetime.strptime(ev.day, "%Y-%m-%d")
+        ev.day = date_obj.strftime("%a %d.%m.%Y")
+    q = "for the next 14 days"
+    return render_template("belts/events_for_belt.html", events = e, Belt = belt, qualification = q)
+
+@app.route("/belts/<id>/allevents", methods=["GET"])
+def list_all_belt_events(id):
+    belt = Belts.query.get(id)
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    e = Events.query.order_by(Events.day, Events.time).filter(Events.belts.contains(belt), Events.day >= today).all()
+    for ev in e:
+        date_obj = datetime.datetime.strptime(ev.day, "%Y-%m-%d")
+        ev.day = date_obj.strftime("%a %d.%m.%Y")
+    q = "in the future"
+    return render_template("belts/events_for_belt.html", events = e, Belt = belt, qualification = q)
 
 @app.route("/belts/del/<id>", methods=["POST"])
 @login_required

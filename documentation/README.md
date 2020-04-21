@@ -32,6 +32,10 @@ Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvau
 
 ## Changelog
 
+### 21.4.2020
+
+Tapahtumia voi tarkastella vyökohtaisesti (14 vrk / tulevaisuus) tai aihealueittain (tulevaisuus). Ulkoasuun lisätty pieniä parannuksia. Asennusohjetta on päivitetty.
+
 ### 19.4.2020
 
 Uuden sensein salasana ei enää näy lähdekoodissa raakatekstinä. Sensei näkee etusivulla varoituksen aiheettomien tapahtumien lisäksi ilman harjoituksia olevista vöistä. Vyövaroitus ei enää ota huomioon edellisten päivien tapahtumia varoituksen poistavana tekijänä.
