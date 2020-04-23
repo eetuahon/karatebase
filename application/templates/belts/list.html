@@ -52,7 +52,7 @@
       {% if current_user.is_authenticated %}
       <td>
         <form method="POST" action="{{ url_for('edit_belts', id=belt.id) }}">
-          <input type="submit" class="btn btn-primary btn-sm" value="Edit"/>
+          <input type="submit" class="btn btn-primary btn-sm" value="Delete"/>
         </form>
       </td>
       {% endif %}

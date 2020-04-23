@@ -1,12 +1,14 @@
 # Karateseura Verinyrkki ry:n harjoituskanta
 
-Tarkempaa dokumentaatiota ohjelman toimivuudesta päivitetään osissa kansioon [/documentation](https://github.com/eetuahon/karatebase/tree/master/documentation/README.md).
+Karateseura Verinyrkki ry järjestää karatetunteja, jotka voivat olla suunnattu yhdelle tai useammalle vyöarvolle. Jokaisen tunnin vetää yksi tai useampi sensei. Seinseit voivat luoda tunteja ja niihin liittyviä vöitä, aiheita ja muita senseitä. Karateseuran järjestelmä toimii samalla periaatteella kuin ircin opit eli kaikki ovat vastuussa kaikesta.
+
+Tarkempaa dokumentaatiota ohjelman toimivuudesta päivitetään osissa tiedostoon [/documentation/README.md](https://github.com/eetuahon/karatebase/tree/master/documentation/README.md), jossa muun muassa kuvataan käytettävää tietokantaa.
 
 Asennusohjeet löytyvät tiedostosta [documentation/installation.md](https://github.com/eetuahon/karatebase/blob/master/documentation/installation.md).
 
 Käyttöohjeet tietokantasovelluksen käyttämiseen ovat tiedostossa [documentation/userguide.md](https://github.com/eetuahon/karatebase/blob/master/documentation/userguide.md)
 
-Karateseura Verinyrkki ry järjestää karatetunteja, jotka voivat olla suunnattu yhdelle tai useammalle vyöarvolle. Jokaisen tunnin vetää yksi tai useampi sensei. Seinseit voivat luoda tunteja ja niihin liittyviä vöitä, aiheita ja muita senseitä. Karateseuran järjestelmä toimii samalla periaatteella kuin ircin opit eli kaikki ovat vastuussa kaikesta.
+Kehitysideoita on tiedostossa [documentation/forthefuture.md](https://github.com/eetuahon/karatebase/blob/master/documentation/forthefuture.md).
 
 Ominaisuuksia:
 * sensein kirjautuminen [x]

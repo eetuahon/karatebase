@@ -2,12 +2,12 @@
 
 Sys.req:
 - Python3
-- pip (python)
-- venv (pythonin kirjasto)
+- pip (pythonin pakettienasennusohjelma)
+- venv (pythonin virtuaaliympäristö)
 
 1. Tallenna tiedostot ohjelmalle varattuun kansioon, esim. [purkamalla ZIP-tiedosto](https://github.com/eetuahon/karatebase/archive/master.zip) uudeksi kansioksi.
 2. Asenna virtuaaliympäristö projektin sisältävään kansioon komennolla `python3 -m venv venv` ja käynnistä se komennolla `source venv/bin/activate`.
-3. Asenna tarvittavat riippuvuudet komennolla `pip install -r requirements.txt`.
+3. Asenna tarvittavat riippuvuudet komennolla `pip install -r requirements.txt`. Komento asentaa ne riippuvuudet, jotka on lueteltu tiedostossa [requirements.txt](https://github.com/eetuahon/karatebase/blob/master/requirements.txt).
 4. Käynnistä ohjelma ajamalla `python3 run.py`, jonka jälkeen ohjelma on päällä ja käytettävissä osoitteessa `http://localhost:5000/`.
 
 ### Sovelluksen siirtäminen pilveen

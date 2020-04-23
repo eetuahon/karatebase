@@ -60,12 +60,7 @@
         {%  endif %}
         {% endfor %}
       </td>
-      <td>{% for t in e.topic_list() %}
-        {{t.desc}}
-        {% if not loop.last %}
-            ,
-        {% endif %}
-    {% endfor %}</td>
+      <td>{% for t in e.topic_list() %}{{t.desc}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
       <td>{{ e.info }}</td>
       <td>
         {% if current_user.is_authenticated %}

@@ -1,36 +1,44 @@
 # Karateseura Verinyrkki ry:n harjoituskanta
 
-## Kirjautuminen
+## Accounts
 
-Parametrien luominen ja muokkaaminen edellyttää jatkossa kirjautumista. Kirjautuminen onnistuu käyttäjätunnuksilla ja hashina tallennetuilla salasanoilla. Init luo automaattisesti tunnukset "genki"/"sudo3", jotta ohjelmaan pääsee aina sisälle. Jokaisella senseillä on logon, jolla on salasana "newuser".
+Kirjautuminen perustuu tietokantatauluun "Accounts", joka sisältää kirjautumiseen liittyvät nimet, käyttäjätunnukset ja salasanat. Kaikki senseit saavat accounts-tiedot, mutta pääkäyttäjä (tai pääkäyttäjät?) ei ole sensei eikä taulut siten ole sama. Pääkäyttäjän on voitava kirjautua, vaikka kaikki senseit poistettaisiinkin.
+
+Account sisältää INT-tyyppisen ID:n, DATETIME-muodon aikaleimat date_created ja date_modified sekä VARCHAR(144)-tyyppiä olevat name, username ja password. Password on tallennettu tietokantaan tiivisteenä, vaikka tietokannan tyyppi ei sitä tiedäkään.
 
 ## Events
 
-Events kuvaa tapahtumia eli harjoitustilanteita. Harjoitukselle on ominaista uniikki nimi, jotta senseit voivat yksilöidä pitämänsä harjoitustunnit ilman id:tä. Harjoituksella on day eli päivä ja time eli aika, jotka toistaiseksi yyyy-mm-dd. Info on harjoitukseen liittyvä sensein viesti harjoittelijoille, ja se voi olla esim. tieto käytettävästä tatamista tai harjoitukseen mukaan tarvittavista välineistä.
+Events kuvaa tapahtumia eli harjoitustilanteita. Yksittäinen event on useimmiten yksittäinen karateharjoitus, mutta event voi myös olla kilpailu, näytöstapahtuma tai mitä tahansa muuta seuran järjestämää ohjelmaa.
 
-Eventsin osalta validoidaan, että nimi on uniikki sekä että nimi ja aika ovat 3–15 merkkiä pitkiä ja alimittainen ei kelpaa välilyönneillä.
-
-Eventsiä voi muokata luettelon Edit-painikkeella. Ainoastaan muuttuneet parametrit toteutetaan, eikä tyhjäksi jätettyjä kirjoiteta tietokantaan.
-
-Edit-painikkeesta voi asettaa eventsille sopivan / sopivat vyöt (belts), aiheet (topic) tai senseit.
+Events sisältää INT-tyyppisen ID:n sekä TEXT-tyyppiset name, day, time ja info. Name on uniikki harjoituksen nimi, jolla senseit voivat keskenään disponoida seuran harjoituksia vaikka samallekin ajankohtalle eri tatameille ilman, että ID:tä tarvitsee tietää. Day on päivämäärän aikaleima, joka voisi olla myös DATETIME. Sovellus käyttää lokaalisti kuitenkin sqlite3-kantaa PostgreSin sijaan, jolloin DATETIME aiheuttaa ongelmia ja siksi aikaleimana käytetään tekstimuotoista ISO-standardin aikaa. Tietokanta osaa hakea formaattia YYYY-MM-DD olevat aikaleimat kronologisessa järjestyksessä, minkä jälkeen leima muutetaan käyttäjälle näkyvään muotoon dd.mm.yyyy. Time on harjoituksen ajankohta, joka voi olla esim. yksittäinen aikaleima ("19:00"), aikaväli ("19:00–20:15") tai vapaamuotoinen ("potkuharjoituksen jälkeen"). Info on osallistujille tarkoitettua vapaamuotoista tekstiä esim. harjoituksen tatamista tai harjoituksessa tarvittavista varusteista.
 
 ## Senseis
 
-Senseis kuvaa harjoituksia vetäviä senseitä. Senseille on ominaista nimi sekä uniikki logon, jolla nimikaimat voidaan erottaa toisistaan käyttämättä tietokannan id:tä. Logon luo käyttäjätunnuksen senseille, joka saa oletuksena salasanan 'newuser'. Sensein luominen ja muokkaaminen validoi, että logon on uniikki ja tiedot ovat 3–15 merkkiä.
+Senseis kuvaa harjoituksia vetäviä senseitä. Sensein funktio on näkyä harjoituksen vetäjänä listauksessa, mutta samalla myös yhdistyä Accounts-tauluun kirjautumista varten.
 
-Senseitä voidaan muokata luettelon Edit-painikkeesta. Ainoastaan muuttuneet parametrit toteutetaan.
+Senseis-taulu sisältää INT-tyyppisen ID:n sekä TEXT-tyyppiset name ja logon. Name on nimi, joka harjoituksen vetäjänä näkyy, ja se kopioidaan Accounts-taulun name-tiedoksi. Logon on uniikki kirjautumistunnus, joka kopioidaan Accounts-tauluun username-tiedoksi, ja jota sensei käyttää kirjautuessaan sisään. Logon ei näy ulkopuolisille.
 
 ## Belts
 
-Belts kuvaa vyöarvoja tai muuta vastaavaa harjoitusryhmän tunnistetta. Vyöarvolle on ominaista uniikki teksti. Koska vyöarvoja on vain n kappaletta, vyöarvot luultavasti asetetaan tietokantaan ensimmäisellä kaudella ja sen jälkeen jätetään sellaiseksi. Tämän takia vyötä ei voi muokata, vaan mahdollinen kirjoitusvirhe korjataan poistamalla vyö ja lisäämällä uusi. Belt validoidaan uniikiksi ja 3–15 merkin pituiseksi.
+Belts kuvaa vyöarvoja tai muuta vastaavaa harjoitusryhmän tunnistetta.
+
+Belts-taulu sisältää INT-tyyppisen ID:n sekä uniikki TEXT-tyyppisen tiedon Belt, joka siis viittaa vyöarvoon – esim. "6. kyu". Seura voi halutessaan käyttää vyöarvona ryhmiä, kuten "kilparyhmä" tai "juniorit".
 
 ## Topics
 
-Topics kuvaa karateharjoitukseen lisättävää teemaa tai muuta aihetta, joka liittyy harjoitustuntiin. Tämä voi esim. olla gyakuzuki (vastakäden lyönti), jokin liikesarja tai muu vastaava aihealue, jolla harjoituksia voi indeksoida. Karateka voi arvioida halukkuuttaan osallistua harjoitukseen yhden tai useamman harjoitukseen liittyvän teeman perusteella. Topic validoidaan uniikiksi ja 3–30 merkkiä pitkäksi.
+Topics kuvaa karateharjoitukseen lisättävää teemaa tai muuta aihetta, joka liittyy harjoitustuntiin. Topics on tarkoitettu ryhmiteltäväksi tekijäksi toisin kuin Events-taulun tapahtumien info-kenttä.
 
-Topic voidaan muokata luettelon Edit-painikkeella, ja ainoastaan muuttunut kuvaus kirjataan tietokantaan.
+Topics-taulu sisältää INT-tyyppisen ID:n sekä uniikin TEXT-tyyppisen tiedon desc, joka on lyhenne sanasta description. Description voi olla esim. karaten perustekniikka ("gyakuzuki"), liikesarja ("pinan godan") tai yleinen aihe ("kehonhuolto").
+
+## Yhdistelmätaulut
+
+Belts-, Senseis- ja Topics-taulut yhdistyvät Events-tauluun many–to–many-suhteessa, koska tapahtumaan voi liittyä yksi tai useampi vyöarvo, sensei ja aihe. Riippuvuus on ratkaistu luomalla suhdetta vastaavat taulut Beltevents, Topicevents ja Senseievents. Kukin taulu sisältää INT-tyyppisen Events-taulun ID:hen viittaavat event_id:t sekä taulukohtaisesti Belts-, Senseis- tai Topics-taulun ID:hen viittaavan INT-tyyppisen belt_id:n, topic_id:n tai sensei_id:n.
 
 ## Changelog
+
+### 23.4.2020
+
+Dokumentaation päivittäminen: käyttöohjeen täydennys, käyttötapausten avaaminen, tietokannan kuvaaminen, kehitysideoiden listaus.
 
 ### 21.4.2020
 

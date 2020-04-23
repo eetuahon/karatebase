@@ -8,9 +8,9 @@ Kaikki tulevat karatetapahtumat näkyvät valitsemalla yläreunan navigointivali
 
 Käyttäjä voi tarkastella karateseuran sensei-luetteloa valitsemalla yläreunan navigointivalikosta "Senseis". Sisään kirjautunut sensei näkee luettelossa nimien lisäksi kunkin yksilöllisen sisäänkirjautumistunnuksen.
 
-Käyttäjä voi tarkastella tapahtumiin liittyviä vyöarvoja (lue: harjoitusryhmiä) valitsemalla yläreunan navigointivalikosta "Belts".
+Käyttäjä voi tarkastella tapahtumiin liittyviä vyöarvoja (lue: harjoitusryhmiä) valitsemalla yläreunan navigointivalikosta "Belts". Luettelosta voi tarkastella vyöhön liittyviä, seuraavan 14 päivän kuluessa tulevaia harjoituksia valitsemalla "The next 14 days for [beltin nimi]". Luettelosta voi myös valita vyöhön liittyvät kaikki tulevat harjoitukset valitsemalla "All events for [beltin nimi]". Lisäksi näytetään vyöhön liittyvien tapahtuvien lukumäärä. Jos vyöhön liittyviä tapahtumia ei ole, linkki muuttuu inaktiiviseksi ja kertoo, ettei tapahtumia ole.
 
-Käyttäjä voi tarkastella seuran harjoituksissa käsiteltäviä aiheita valitsemalla yläreunan navigointivalikosta "Topics".
+Käyttäjä voi tarkastella seuran harjoituksissa käsiteltäviä aiheita valitsemalla yläreunan navigointivalikosta "Topics". Luettelosta voi tarkastella kunkin aihealueen tulevia harjoituksia valitsemalla "Events with [aiheen nimi]". Lisäksi näytetään aiheeseen liittyvien tapahtumien lukumäärä. Jos tulevia taphtumia aiheesta ei ole tulossa, linkki on inaktiivinen ja kertoo, ettei tapahtumia ole.
 
 ## Käyttäjän (sensei) toimenpiteet
 
@@ -34,13 +34,19 @@ Uusi tapahtuma luodaan tapahtumaluettelosta ("Events") valitsemalla tapahtumatau
 
 #### Tapahtuman muokkaaminen ja senseiden / vöiden / aiheiden asettamienn
 
-Tapahtumien muokkaaminen on mahdollista valitsemalla tapahtumalistasta "Edit" muokattavaksi halutun tapahtuman kohdalta.
+Tapahtumien muokkaaminen on mahdollista valitsemalla tapahtumalistasta "Edit" muokattavaksi halutun tapahtuman kohdalta. Senseit, vyöt ja aiheet ovat tapahtuman tiedoissa allekkain taulukoituina siten, että tapahtumaan liittyvät asiat ovat vasemmalla ja loput oikealla.
+
+Sensei, vyö tai aihe lisätään valitsemalla Senseis-, Belts- tai Topics-kohdan oikeasta reunasta inaktiivinen ja aktiiviseksi haluttu asia painamalla "Add [asia]". Muutosta ei tarvitse tallentaa enää erikseen.
+
+Sensei, vyö tai aihe poistetaan valitsemalla Senseis-, Belts- tai Topics-kohdan vasemmasta reunasta aktiivinen ja inaktiiviseksi haluttu asia painamalla "Remove [asia]". Muutosta ei tarvitse tallentaa enää erikseen.
+
+Tapahtuman nimeä, päivää, aikaa tai infoa voi muokata Edit-sivun alareunan Edit-taulukossa. Muutettujen tietojen on täytettävä alkuperäisten tietojen vaatimukset. Taulukkoon ei tarvitse täyttää niitä tietoja, joita ei haluta muokattavaksi. Kun muutetut tiedot ovat valmiina, käyttäjän on painettava "Change".
 
 #### Tapahtuman poistaminen
 
 Tapahtuman poistaminen tapahtuu samalta sivulta, josta tapahtumaa voi muokata. Tällöin alareunasta valitaan "Delete".
 
-Yli viikon vanhat tapahtumat poistetaan automaattisesti, kun kirjautunut käyttäjä lataa Events-sivun.
+Yli viikon vanhat tapahtumat poistetaan automaattisesti, kun kirjautunut käyttäjä lataa Events-sivun. Poisto edellyttää kirjautumista, jotta useat seuran jäsenet eivät turhaan pyri poistamaan monta kertaa saman päivän aikana vanhoja tapahtumia.
 
 ### Senseiden toimenpiteet
 
@@ -54,11 +60,37 @@ Sekä nimen että kirjautumistunnuksen on oltava 3–15 merkkiä. Kirjautumistun
 
 #### Sensein muokkaaminen
 
+Senseitä voi muokata Sensei-luettelosta valitsemalla halutun sensein kohdalta "Edit". Pääkäyttäjä voi muokata kaikkia senseitä, mutta sensei voi muokata voin omia tietojaan (pl. poistaminen).
+
+Lomakkeella voi syöttää uuden sensein nimen ja logon-tiedon, ja tiedot tallenetaan painamalla "Change". Ainoastaan muuttunut tieto täytyy kirjoittaa lomakkeeseen.
+
 #### Sensein poistaminen
+
+Sensei poistetaan Sensei-luettelosta valitsemalla sensein kohdalta "Edit". Tämän jälkeen aukeaa valikko, josta sensei saadaan poistettua valitsemalla "Delete".
 
 ### Vyöarvojen toimenpiteet
 
+#### Vyöarvon luominen
+
+Uusi vyöarvo luodaan valitsemalla ylärivin navigointivalikosta "Belts" ja tämän jälkeen "Add a belt". Vyölle annetaan taulukossa sisältö kohtaan "Belt / group", johon syötetään 3–15 merkkiä pitkä selite vyölle, esim. "6. kyu". Tieto tallennettaan valitsemalla "Add a new belt".
+
+#### Vyöarvon muokkaus ja deletointi
+
+Karaten vyöarvot ovat stabiileja, joten luultavasti kaikki variaatiot vyöarvoista lienevät tietokannassa muutaman ensimmäisen käyttökerran jälkeen. Siksi vyötä ei voi muokata, vaan mahdollinen kirjoitusvirhe korjataan poistamalla vyö ja luomalla uusi.
+
+Vyö poistetaan valitsemalla vyöluettelosta "Delete", minkä jälkeen aukeaa vielä vyön tiedot sisältävä sivu. Sivulta valitaan "Delete", jolloin vyö poistetaan tietokannasta.
+
 ### Aihealueiden toimenpiteet
+
+#### Aihealueen lisääminen
+
+Aihealue lisätään valitsemalla yläreunan navigointivalikosta "Topics" ja tämän jälkeen "Add a topic". Tällöin aukeaa lomake, johon uuden aiheen kuvauksen voi syöttää. Aiheen on oltava 3–30 merkkiä pitkä. Uusi aihe tallennetaan valitsemalla "Add a new topic".
+
+#### Aihealueen muokkaaminen ja poistaminen
+
+Aihealueen muokkaaminen ja poistaminen tapahtuvat valitsemalla aihealuiden luettelosta halutun aiheen kohdalta "Edit".
+
+Muutettu kuvaus, jonka on vastattava alkuperäisen aiheen ehtoja, voidaan syöttää kohtaan "New description" ja tallentaa valitsemalla "Change". Aihe voidaan poistaa valitsemalla "Delete", jolloin aihe poistetaan tietokannasta.
 
 ### Ylläpitäjän varoitukset
 
