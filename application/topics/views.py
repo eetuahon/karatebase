@@ -72,10 +72,14 @@ def mod_topics(id):
         flash("Topic {} was modified".format(t.desc))
         return redirect(url_for("topics_index"))
 
-@app.route("/topics/del/<id>", methods=["POST"])
+@app.route("/topics/del/<id>", methods=["POST", "GET"])
 @login_required
 def topics_del(id):
     t = Topics.query.get(id)
+
+    if request.method == "GET":
+        return render_template("topics/delete_confirmation.html", topics = t)
+
     flash("{} is no longer needed for the black belt".format(t.desc).capitalize())
     db.session().delete(t)
     db.session().commit()

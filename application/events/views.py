@@ -43,7 +43,7 @@ def events_create():
         return render_template("events/new.html", form = form)
 
     d = form.day.data
-    if d == None:
+    if d == None or d < datetime.datetime.now():
         d = datetime.datetime.now().strftime("%Y-%m-%d")
     else:
         d = d.strftime("%Y-%m-%d")
@@ -51,6 +51,8 @@ def events_create():
 
     db.session().add(e)
     db.session().commit()
+    e_date = datetime.datetime.strptime(d, "%Y-%m-%d")
+    d = e_date.strftime("%a %d.%m.%Y")
     flash("New event created on {}".format(d))
     return redirect(url_for("events_index"))
 
@@ -141,8 +143,8 @@ def mod_events(id):
         error = "Time should be between 3 and 30 char"
         return render_template("events/edit.html", events = e, form = EventForm(), error = error)
 
-    if d != "" and d == None:
-        e.day = datetime.datetime.now().strftime("%Y-%m-%d") #formerly "%d.%m.%Y"
+    if d != "" and d == None or d < datetime.datetime.now():
+        e.day = datetime.datetime.now().strftime("%Y-%m-%d")
     elif d != "":
         d = d.strftime("%Y-%m-%d")
         e.day = d
@@ -153,15 +155,23 @@ def mod_events(id):
     if len(i) > 0:
         e.info = i
     db.session().commit()
+    e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
+    e.day = e_date.strftime("%a %d.%m.%Y")
     flash("Event '{}' on {} was modified".format(e.name, e.day))
     return redirect(url_for("events_index"))
 
-@app.route("/events/del/<id>", methods=["POST"])
+@app.route("/events/del/<int:id>", methods=["POST", "GET"])
 @login_required
 def events_del(id):
-    t = Events.query.get(id)
-    flash("Event '{}' on {} was deleted".format(t.name, t.day))
-    db.session().delete(t)
+    e = Events.query.get(id)
+    e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
+    e.day = e_date.strftime("%d.%m.%Y (%a)")
+
+    if request.method == "GET":
+        return render_template("events/delete_confirmation.html", events = e)
+
+    flash("Event '{}' on {} was deleted".format(e.name, e.day))
+    db.session().delete(e)
     db.session().commit()
     return redirect(url_for("events_index"))
 

@@ -25,7 +25,7 @@
 
   </table>
   {% if current_user.username == senseis.logon or current_user.username == 'genki' %}
-  <h3>Edit</h3>
+  <h3 class="mt-4">Edit</h3>
   {% if error %}
     <div class="alert alert-warning" role="alert">
       {{ error }}
@@ -41,10 +41,10 @@
   </form>
   {% endif %}
 
-  <p>Do you wish to delete this sensei? You cannot undo this!</p>
-  <form method="POST" action="{{ url_for('senseis_del', id=senseis.id) }}">
+  <h3 class="mt-4">Delete sensei</h3>
+  <form method="GET" action="{{ url_for('senseis_del', id=senseis.id) }}">
     <input type="hidden" name="id" value={{ senseis.id }}/>
-    <input type="submit" class="btn btn-warning" value="Delete"/>
+    <input type="submit" class="btn btn-warning mb-5" value="Delete"/>
   </form>
 
 {% endblock %}

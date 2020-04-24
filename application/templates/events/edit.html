@@ -30,7 +30,7 @@
     </tbody>
 
   </table>
-  <h3>Belts</h3>
+  <h3 class="mt-4">Belts</h3>
   <table class="table">
     <col width="50%">
     <col width="50%">
@@ -56,7 +56,7 @@
         {% endfor %}</td>
     </tr>
   </table>
-  <h3>Topics</h3>
+  <h3 class="mt-4">Topics</h3>
   <table class="table">
     <col width="50%">
     <col width="50%">
@@ -82,7 +82,7 @@
         {% endfor %}</td>
     </tr>
   </table>
-  <h3>Senseis</h3>
+  <h3 class="mt-4">Senseis</h3>
   <table class="table">
     <col width="50%">
     <col width="50%">
@@ -108,7 +108,7 @@
         {% endfor %}</td>
     </tr>
   </table>
-  <h3>Edit</h3>
+  <h3 class="mt-4">Edit</h3>
   <form method="POST" action="{{ url_for('mod_events', id=events.id) }}">
     <table class="table">
       <tr>
@@ -151,12 +151,12 @@
       </tr>
   </table>
   </form>
-  <p>Nb! Please use 'd.m.yyyy' format for 'Day'. Unknown inputs will be interpreted as 'today'.</p>
+  <p class="alert alert-info my-3">Nb! Please use 'd.m.yyyy' format for 'Day'. Unknown inputs or the past will be interpreted as 'today'.</p>
 
-  <p>Do you wish to delete this event? You cannot undo this!</p>
-  <form method="POST" action="{{ url_for('events_del', id=events.id) }}">
+  <h3 class="mt-4">Delete event</h3>
+  <form method="GET" action="{{ url_for('events_del', id=events.id) }}">
     <input type="hidden" name="id" value={{ events.id }}/>
-    <input type="submit" class="btn btn-warning" value="Delete"/>
+    <input type="submit" class="btn btn-warning mb-5" value="Delete"/>
   </form>
 
 {% endblock %}

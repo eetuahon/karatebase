@@ -82,10 +82,14 @@ def mod_senseis(id):
     flash("Sensei {} was modified".format(s.name))
     return redirect(url_for("senseis_index"))
 
-@app.route("/senseis/del/<id>", methods=["POST"])
+@app.route("/senseis/del/<int:id>", methods=["POST", "GET"])
 @login_required
 def senseis_del(id):
     t = Senseis.query.get(id)
+
+    if request.method == "GET":
+        return render_template("senseis/delete_confirmation.html", senseis = t)
+
     logon = t.logon
     user = User.query.filter_by(username=logon).first()
     flash("Sensei {} has left the dojo".format(t.name))

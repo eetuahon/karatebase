@@ -37,10 +37,10 @@
     <input type="submit" class="btn btn-primary btn-sm" value="Change"/>
   </form>
 
-  <p>Do you wish to delete the description? You cannot undo this!</p>
-  <form method="POST" action="{{ url_for('topics_del', id=topics.id) }}">
+  <h3 class="mt-4">Delete topic</h3>
+  <form method="GET" action="{{ url_for('topics_del', id=topics.id) }}">
     <input type="hidden" name="id" value={{ topics.id }}/>
-    <input type="submit" class="btn btn-warning" value="Delete"/>
+    <input type="submit" class="btn btn-warning mb-5" value="Delete"/>
   </form>
 
 {% endblock %}

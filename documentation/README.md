@@ -36,6 +36,10 @@ Belts-, Senseis- ja Topics-taulut yhdistyvät Events-tauluun many–to–many-su
 
 ## Changelog
 
+### 24.4.2020
+
+Asioiden poistaminen vaatii nyt aina 2 klikkausta, jottei vahinkopoistoja tapahdu. Historialliset events-päiväykset ovat jatkossa "tänään". Elementtien margineita säädetty hieman.
+
 ### 23.4.2020
 
 Dokumentaation päivittäminen: käyttöohjeen täydennys, käyttötapausten avaaminen, tietokannan kuvaaminen, kehitysideoiden listaus.
