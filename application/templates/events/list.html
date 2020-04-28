@@ -67,6 +67,9 @@
         <form method="POST" action="{{ url_for('edit_events', id=e.id) }}">
           <input type="submit" class="btn btn-primary btn-sm" value="Edit"/>
         </form>
+        <form method="GET" action="{{ url_for('events_duplicate', id=e.id) }}">
+          <input type="submit" class="btn btn-primary btn-sm" value="Copy"/>
+        </form>
       </td>
       {% endif %}
     </tr>

@@ -57,6 +57,28 @@ def events_create():
     flash("New event created on {}".format(d))
     return redirect(url_for("events_index"))
 
+@app.route("/events/duplicate/<id>")
+@login_required
+def events_duplicate(id):
+    old_event = Events.query.get(id)
+    week_date = datetime.datetime.strptime(old_event.day, "%Y-%m-%d") + datetime.timedelta(days=7)
+    week_later = (week_date).strftime("%Y-%m-%d")
+    new_name = old_event.name + "-" + str(id) + "dupl"
+
+    prior_event = Events.query.filter_by(name=new_name).first()
+    if prior_event:
+        flash("Event {} was NOT duplicated, '{}' already exists".format(old_event.name, new_name))
+        return redirect(url_for("events_index"))
+
+    new_event = Events(new_name, week_later, old_event.time, old_event.info)
+    new_event.senseis = old_event.senseis
+    new_event.belts = old_event.belts
+    new_event.topics = old_event.topics
+    db.session().add(new_event)
+    db.session().commit()
+    flash("Event {} was duplicated as {}".format(old_event.name, new_event.name))
+    return redirect(url_for("events_index"))
+
 @app.route("/events/<id>", methods=["POST", "GET"])
 @login_required
 def edit_events(id):

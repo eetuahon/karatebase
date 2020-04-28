@@ -38,7 +38,7 @@ Belts-, Senseis- ja Topics-taulut yhdistyvät Events-tauluun many–to–many-su
 
 ### 28.4.2020
 
-Events-lomakkeilla on valmiina nykyinen (uusi) tai aikaisempi (vanha) päiväys. Models-faili on silputtu alikansioihin. Tulevia tapahtumia voi katsoa myös senseikohtaisesti.
+Events-lomakkeilla on valmiina nykyinen (uusi) tai aikaisempi (vanha) päiväys. Models-faili on silputtu alikansioihin. Tulevia tapahtumia voi katsoa myös senseikohtaisesti. Tapahtuman voi kahdentaa (lue: toistaa), jolloin sama event toistuu samaan aikaan (time) viikkoa myöhemmin samoilla parametreilla (sensei, aihe, vyö, info).
 
 ### 24.4.2020
 
