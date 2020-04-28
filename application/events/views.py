@@ -1,7 +1,7 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required, current_user
-from application.models import Events
+from application.events.models import Events
 from application.forms import EventForm
 import datetime
 
@@ -28,7 +28,8 @@ def events_index():
 @app.route("/events/new/")
 @login_required
 def events_form():
-    return render_template("events/new.html", form = EventForm())
+    today = datetime.datetime.now()
+    return render_template("events/new.html", form = EventForm(day=today))
 
 @app.route("/events/", methods=["POST"])
 @login_required
@@ -62,7 +63,7 @@ def edit_events(id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm())
+    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
 
 @app.route("/events/<id>/addbelt/<b_id>", methods=["POST"])
 @login_required
@@ -71,7 +72,7 @@ def add_belt(id, b_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm())
+    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
 
 @app.route("/events/<id>/delbelt/<b_id>", methods=["POST"])
 @login_required
@@ -80,7 +81,7 @@ def del_belt(id, b_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm())
+    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
 
 @app.route("/events/<id>/addtopic/<t_id>", methods=["POST"])
 @login_required
@@ -89,7 +90,7 @@ def add_topic(id, t_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm())
+    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
 
 @app.route("/events/<id>/deltopic/<t_id>", methods=["POST"])
 @login_required
@@ -98,7 +99,7 @@ def del_topic(id, t_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm())
+    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
 
 @app.route("/events/<id>/addsensei/<s_id>", methods=["POST"])
 @login_required
@@ -107,7 +108,7 @@ def add_sensei(id, s_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm())
+    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
 
 @app.route("/events/<id>/delsensei/<s_id>", methods=["POST"])
 @login_required
@@ -116,7 +117,7 @@ def del_sensei(id, s_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm())
+    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
 
 @app.route("/events/ed/<id>", methods=["POST"])
 @login_required
@@ -127,21 +128,22 @@ def mod_events(id):
     t = form.time.data
     i = form.info.data
     e = Events.query.get(id)
+    e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     prior_event = Events.query.filter_by(name=form.name.data).first()
     same = (e == prior_event)
 
     if (len(name) > 30 or (len(name) > 0 and len(name.strip()) < 3)) and (len(t) > 30 or (len(t) > 0 and len(t.strip()) < 3)):
         error = "Name and time should be between 3 and 30 char"
-        return render_template("events/edit.html", events = e, form = EventForm(), error = error)
+        return render_template("events/edit.html", events = e, form = EventForm(day=e_date), error = error)
     elif (len(name) > 30 or (len(name) > 0 and len(name.strip()) < 3)):
         error = "Name should be between 3 and 30 char"
-        return render_template("events/edit.html", events = e, form = EventForm(), error = error)
+        return render_template("events/edit.html", events = e, form = EventForm(day=e_date), error = error)
     elif prior_event and not same:
         error = "Event name already exists"
-        return render_template("events/edit.html", events = e, form = EventForm(), error = error)
+        return render_template("events/edit.html", events = e, form = EventForm(day=e_date), error = error)
     elif (len(t) > 30 or (len(t) > 0 and len(t.strip()) < 3)):
         error = "Time should be between 3 and 30 char"
-        return render_template("events/edit.html", events = e, form = EventForm(), error = error)
+        return render_template("events/edit.html", events = e, form = EventForm(day=e_date), error = error)
 
     if d != "" and d == None or d < datetime.datetime.now():
         e.day = datetime.datetime.now().strftime("%Y-%m-%d")

@@ -18,6 +18,7 @@
     <thead class="thead-light">
     <tr>
       <th>Name</th>
+      <th>Events in the future</th>
       {% if current_user.is_authenticated %}
       <th>Logon</th>
       {% endif %}
@@ -28,6 +29,11 @@
     {% for s in senseis %}
     <tr>
       <td>{{ s.name }}</td>
+      <td>{% if s.count_senseievents() > 0 %}
+        <a href="{{ url_for('list_sensei_events', id=s.id) }}">Events held by Sensei {{ s.name }} ({{ s.count_senseievents() }})</a>
+        {% else %}
+        <span class="text-muted">No events held by Sensei {{ s.name }} in the future</span>{% endif %}
+      </td>
       {% if current_user.is_authenticated %}
       <td>{{ s.logon }}</td>
       {% endif %}

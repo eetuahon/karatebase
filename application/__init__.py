@@ -46,15 +46,17 @@ def login_required(_func=None, *, role="ANY"):
     return wrapper if _func is None else wrapper(_func)
 
 from application import views
-
 from application import models
-from application.belts import views
-from application.senseis import views
-from application.topics import views
-from application.events import views
+
+from application.belts import views, models
+
+from application.senseis import views, models
+
+from application.topics import views, models
+
+from application.events import views, models
 
 from application.auth import models, views
-
 from application.auth.models import User
 
 @login_manager.user_loader

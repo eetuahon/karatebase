@@ -36,6 +36,10 @@ Belts-, Senseis- ja Topics-taulut yhdistyvät Events-tauluun many–to–many-su
 
 ## Changelog
 
+### 28.4.2020
+
+Events-lomakkeilla on valmiina nykyinen (uusi) tai aikaisempi (vanha) päiväys. Models-faili on silputtu alikansioihin. Tulevia tapahtumia voi katsoa myös senseikohtaisesti.
+
 ### 24.4.2020
 
 Asioiden poistaminen vaatii nyt aina 2 klikkausta, jottei vahinkopoistoja tapahdu. Historialliset events-päiväykset ovat jatkossa "tänään". Elementtien margineita säädetty hieman.

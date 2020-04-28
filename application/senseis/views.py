@@ -1,10 +1,12 @@
 from application import app, db, login_required, login_manager
 from flask import redirect, render_template, request, url_for, flash
 from flask_login import current_user
-from application.models import Senseis
+from application.events.models import Events
+from application.senseis.models import Senseis
 from application.forms import SenseiForm
 from application.auth.models import User
 from sqlalchemy.sql import func
+import datetime
 
 @app.route("/senseis", methods=["GET"])
 def senseis_index():
@@ -14,6 +16,16 @@ def senseis_index():
 @login_required
 def senseis_form():
     return render_template("senseis/new.html", form = SenseiForm())
+
+@app.route("/senseis/<id>/events", methods=["GET"])
+def list_sensei_events(id):
+    sensei = Senseis.query.get(id)
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    e = Events.query.order_by(Events.day, Events.time).filter(Events.senseis.contains(sensei), Events.day >= today).all()
+    for ev in e:
+        date_obj = datetime.datetime.strptime(ev.day, "%Y-%m-%d")
+        ev.day = date_obj.strftime("%a %d.%m.%Y")
+    return render_template("senseis/events_for_sensei.html", events = e, Sensei = sensei)
 
 @app.route("/senseis/", methods=["POST"])
 @login_required

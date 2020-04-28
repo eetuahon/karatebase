@@ -1,7 +1,7 @@
 from flask import render_template
 from application import app
 from flask_login import login_required, current_user
-from application.models import Events
+from application.events.models import Events
 import datetime
 
 @app.route("/")

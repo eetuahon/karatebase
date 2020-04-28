@@ -1,7 +1,8 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required
-from application.models import Topics, Events
+from application.events.models import Events
+from application.topics.models import Topics
 from application.forms import TopicForm
 import datetime
 

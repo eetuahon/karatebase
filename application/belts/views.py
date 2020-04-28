@@ -1,7 +1,8 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required
-from application.models import Belts, Events
+from application.events.models import Events
+from application.belts.models import Belts
 from application.forms import BeltForm
 import datetime
 
