@@ -57,13 +57,16 @@ def events_create():
     flash("New event created on {}".format(d))
     return redirect(url_for("events_index"))
 
-@app.route("/events/duplicate/<id>")
+@app.route("/events/duplicate/<id>", methods=["POST"])
 @login_required
 def events_duplicate(id):
     old_event = Events.query.get(id)
     week_date = datetime.datetime.strptime(old_event.day, "%Y-%m-%d") + datetime.timedelta(days=7)
     week_later = (week_date).strftime("%Y-%m-%d")
     new_name = old_event.name + "-" + str(id) + "dupl"
+
+    if len(new_name) > 30:
+        new_name = new_name[-30:]
 
     prior_event = Events.query.filter_by(name=new_name).first()
     if prior_event:
@@ -85,7 +88,8 @@ def edit_events(id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
+    return render_template("events/edit.html", events = e,
+        form = EventForm(day=e_date, name=e.name, time=e.time, info=e.info))
 
 @app.route("/events/<id>/addbelt/<b_id>", methods=["POST"])
 @login_required
@@ -94,7 +98,8 @@ def add_belt(id, b_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
+    return render_template("events/edit.html", events = e,
+        form = EventForm(day=e_date, name=e.name, time=e.time, info=e.info))
 
 @app.route("/events/<id>/delbelt/<b_id>", methods=["POST"])
 @login_required
@@ -103,7 +108,8 @@ def del_belt(id, b_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
+    return render_template("events/edit.html", events = e,
+        form = EventForm(day=e_date, name=e.name, time=e.time, info=e.info))
 
 @app.route("/events/<id>/addtopic/<t_id>", methods=["POST"])
 @login_required
@@ -112,7 +118,8 @@ def add_topic(id, t_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
+    return render_template("events/edit.html", events = e,
+        form = EventForm(day=e_date, name=e.name, time=e.time, info=e.info))
 
 @app.route("/events/<id>/deltopic/<t_id>", methods=["POST"])
 @login_required
@@ -121,7 +128,8 @@ def del_topic(id, t_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
+    return render_template("events/edit.html", events = e,
+        form = EventForm(day=e_date, name=e.name, time=e.time, info=e.info))
 
 @app.route("/events/<id>/addsensei/<s_id>", methods=["POST"])
 @login_required
@@ -130,7 +138,8 @@ def add_sensei(id, s_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
+    return render_template("events/edit.html", events = e,
+        form = EventForm(day=e_date, name=e.name, time=e.time, info=e.info))
 
 @app.route("/events/<id>/delsensei/<s_id>", methods=["POST"])
 @login_required
@@ -139,7 +148,8 @@ def del_sensei(id, s_id):
     e = Events.query.get(id)
     e_date = datetime.datetime.strptime(e.day, "%Y-%m-%d")
     e.day = e_date.strftime("%a %d.%m.%Y")
-    return render_template("events/edit.html", events = e, form = EventForm(day=e_date))
+    return render_template("events/edit.html", events = e,
+        form = EventForm(day=e_date, name=e.name, time=e.time, info=e.info))
 
 @app.route("/events/ed/<id>", methods=["POST"])
 @login_required

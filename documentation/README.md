@@ -36,6 +36,12 @@ Belts-, Senseis- ja Topics-taulut yhdistyvät Events-tauluun many–to–many-su
 
 ## Changelog
 
+### 29.4.2020
+
+Kustomoidut virhekoodit 404, 405 ja 500 on nyt implementoitu. Eventsin muokkaussivulla on autofill kaikkiin vanhoihin tietoihin (tyhjä kohta ei edelleen muuta aiempaa). Eventsin duplikointi on korjattu POST-metodiin aiemmasta GET-metodista. Debug-mode on otettu pois käytöstä.
+
+Käyttöohjetta on päivitetty vastaamaan kaikkia ominaisuuksia, ja käyttäjäkokemuksien toteutuksia on täsmennetty.
+
 ### 28.4.2020
 
 Events-lomakkeilla on valmiina nykyinen (uusi) tai aikaisempi (vanha) päiväys. Models-faili on silputtu alikansioihin. Tulevia tapahtumia voi katsoa myös senseikohtaisesti. Tapahtuman voi kahdentaa (lue: toistaa), jolloin sama event toistuu samaan aikaan (time) viikkoa myöhemmin samoilla parametreilla (sensei, aihe, vyö, info).

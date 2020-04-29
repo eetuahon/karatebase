@@ -22,3 +22,15 @@ def index():
         no_t = ""
         ne = ""
     return render_template("index.html", events = e, no_topic = no_t, no_events = ne)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("error.html", code="404 Not Found"), 404
+
+@app.errorhandler(405)
+def page_not_found(e):
+    return render_template("error.html", code="405 Method Not Allowed"), 405
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template("error.html", code="500 Internal Server Error"), 500

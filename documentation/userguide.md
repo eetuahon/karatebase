@@ -28,11 +28,17 @@ Alla lueteltavat käyttäjän toimenpiteet edellyttävät myös ilman erillistä
 
 Uusi tapahtuma luodaan tapahtumaluettelosta ("Events") valitsemalla tapahtumataulukon yläreunasta "Add an event", jolloin käyttäjä saa lomakeen tapahtumien luomiseksi. Uudelle tapahtumalle syötetään lomakkeessa:
 1. Name on tapahtumalle tarkoitettu uniikki nimi, joka on 3–30 merkkiä pitkä. Nimi on tapahtumalle pakollinen, ja sen tarkoituksena on yksilöidä tapahtumat senseiden muussa keskustelussa. Senseit voivat esimerkiksi sopia samaan aikaan eri tatameilla järjestettävien tapahtumien järjestämisestä käyttämällä tapahtuman nimeä. Name näkyy ainoastaan kirjautuneelle käyttäjälle.
-2. Day on tapahtumalle suunniteltu päivämäärä. Päivämäärä on annettava muodossa dd.mm.yyyy eli suomalaisen käytännön mukaisesti. Jos syötettä ei voida tulkita yksiselitteiseksi päivämääräksi, tapahtuma luodaan tapahtumaan tänään.
+2. Day on tapahtumalle suunniteltu päivämäärä. Päivämäärä on annettava muodossa dd.mm.yyyy eli suomalaisen käytännön mukaisesti. Jos syötettä ei voida tulkita yksiselitteiseksi päivämääräksi tai jos tapahtuman päiväys on mennyt jo, tapahtuma luodaan tapahtumaan tänään.
 3. Time on tapahtumalle suunniteltu ajankohta, joka voi olla 3–30 merkkiä pitkä. Tietoa ei validoida testein, joten ajankohta voi olla karateseuran käytännön mukaisesti esim. "19:00", "19:00–20:15" tai "venyttelyharjoituksen jälkeen". Tekstinä ilmoitetuissa ajoissa on otettava huomioon, että harjoitukset eivät välttämättä listaudu kronologisesti näkymässä.
 4. Info on tapahtumalle tarkoitettu lisätieto, joka voi olla esimerkiksi "harjoituksissa tarvitaan nyrkkeilyhanskat" tai paikkatieto "tatami 2".
 
-#### Tapahtuman muokkaaminen ja senseiden / vöiden / aiheiden asettamienn
+#### Uuden tapahtuman luominen vanhasta
+
+Tapahtumaa ei tarvitse tehdä kokonaan alusta, vaan vanhan tapahtuman voi kahdentaa. Kahdentaminen onnistuu Events-tapahtumaluettelosta valitsemalla "Copy" kahdennettavaksi halutun tapahtuman kohdalta. Tällöin eventille luodaan kopio tasan viikkoa myöhemmin samoilla parametreilla.
+
+Kopioitu tapahtuma saa nimekseen alkuperäisen tapahtuman nimen, mutta nimeen lisätään kopioidun tapahtuman id ja "dupl". Mikäli tällainen tapahtuma on jo olemassa, kopiota ei luoda. Kopio sisältää alkuperäisen tapahtuman infon, ajan, senseit, vyöt ja aiheet. Kopion luominen ei muuta alkuperäistä tapahtumaa.
+
+#### Tapahtuman muokkaaminen ja senseiden / vöiden / aiheiden asettaminen
 
 Tapahtumien muokkaaminen on mahdollista valitsemalla tapahtumalistasta "Edit" muokattavaksi halutun tapahtuman kohdalta. Senseit, vyöt ja aiheet ovat tapahtuman tiedoissa allekkain taulukoituina siten, että tapahtumaan liittyvät asiat ovat vasemmalla ja loput oikealla.
 
