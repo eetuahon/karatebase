@@ -1,0 +1,17 @@
+Karatebase License Agreement
+
+Copyright 2020 Eetu Ahonen
+
+Permission is hereby granted by the copyright holder (hereinafter "the Licensor"), free of charge, to any person ("you") obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The Software is provided "AS IS" without representations or warranties of any kind. The Licensor does not grant any kind of promise that the Software would function properly or fit for a particular purpose. The Licensor does not warrant that the Software would not infringe the rights of third parties.
+
+You must not use the Software in any manner which violates the local laws of your domicile.
+
+In no event shall the Licensor be held liable for any claim, direct or indirect damages or other liability out of or in connection with the Software or derivative works of it.
+
+This License shall be governed by the laws of the Republic of Finland, excluding its rules on conflict of laws.
+
+Any dispute, controversy or claim arising out of or relating to this License, or the breach, termination or validity thereof, shall be finally settled by arbitration in accordance with the Arbitration Rules of the Finland Chamber of Commerce. The number of arbitrators shall be one, the seat of arbitration shall be Helsinki, Finland, and the language of the arbitration shall be English.
+
+You are entitled but not obligated to buy the Licensor one (1) pint of beer if you find that the Licensor has deserved it.

@@ -18,6 +18,14 @@ Poistaminen tapahtuu etsimällä Events-olio id:n perusteella `e = Events.query.
 
 Valittu olio on tarpeen mukaan Events-olio, Belts-olio (parametrina belt), Topics-olio (parametrina desc) tai Senseis-olio (parametreina name ja logon).
 
+## "senseinä haluan liittää ajankohtaan yhden / useamman vyöarvon / sensein / aiheen"
+
+Jos ajankohtaan halutaan liittää vapaavalintainen uusi vyö / sensei / aihe tapahtumaa muokkaamalla, taulukko ajaa soveltuvaan liitostauluun (beltevents, senseievents, topicevents) yhteyden SQL-kyselyllä `INSERT INTO beltevents (belt_id, event_id) VALUES (:a, :b)`, jossa :a on Belts-olion ID joka halutaan liittää Events-olioon ja :b on Events-olion ID. Vastaavasti yhteyden poistaminen onnistuu kyselyllä `DELETE FROM beltevents WHERE belt_id = :a AND event_id = :b`.
+
+Tapahtuman muokkauskenttä tarjoaa painikkeet vyön, sensein ja aiheen lisäämiseen vain silloin, kun niitä ei ole valittu ja poistamisen vain, kun ne on valittu. Ohjelma hakee luettelon valituista vöistä SQL-kyselyllä `SELECT B.belt, B.id FROM Belts B LEFT JOIN beltevents BE ON B.id = BE.belt_id WHERE BE.event_id = :a ORDER BY LOWER(B.belt)`, jossa :a on metodia kutsuvan Events-olion oma ID. Ne vyöt, joita ei ole valittu, haetaan kyselyllä `SELECT B.belt, B.id FROM Belts B WHERE B.id NOT IN (SELECT Bb.id FROM Belts Bb LEFT JOIN beltevents BE ON Bb.id = BE.belt_id WHERE BE.event_id = :a) ORDER BY LOWER(B.belt)`.
+
+Kun tapahtumaan liitetään vyöt, sensei ja aihe toisesta tapahtumasta duplikoimalla, kysely on ulkoistettu Flask-SQLAlchemylle komennoksi `new_event.belts = old_event.belts`, jossa new_event on juuri luotu uusi olio tapahtumalle ja old_event on kopioitavaksi tarkoitettu olio. Käytettävissä on kaikki Events-metodille määritellyt määreet belts, senseis ja topics.
+
 ## "seuran jäsenä haluan katsoa kirjautumatta itselleni sopivat, lähiaikoina tulevat harjoitukset"
 
 Etusivu näyttää seuraavan 7 päivän aikana tulevat tapahtumat perustuen Flask-SQLAlchemyn kutsuun `Events.query.order_by(Events.day, Events.time).filter(Events.day >= today, Events.day < week).all()`, jossa today on kyseinen päivä string-muodossa yyyy-mm-dd ja week viikon päästä tuleva päivä.

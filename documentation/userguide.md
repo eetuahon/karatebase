@@ -62,7 +62,7 @@ Uusi sensei luodaan valitsemalla ylärivin navigointivalikosta "Senseis" ja täm
 1. Name on sensein näkyvä nimi, jolla tämä näkyy luettelossa ja itselleen liitetyissä tapahtumissa. Nimen ei tarvitse olla uniikki, vaan seurassa voi olla samannimisiä senseitä.
 2. Logon on kirjautumistunnus, joka näkyy vain kirjautuneelle käyttäjälle ja jota sensei käyttää kirjautuessaan sisään. Logonin täytyy olla uniikki.
 
-Sekä nimen että kirjautumistunnuksen on oltava 3–15 merkkiä. Kirjautumistunnus muutetaan automaattisesti pieniksi kirjaimiksi.
+Sekä nimen että kirjautumistunnuksen on oltava 3–15 merkkiä. Kirjautumistunnus muutetaan automaattisesti pieniksi kirjaimiksi. Sensei voi kirjautua tietokantasovellukseen omalla logon-tunnuksellaan ja salasanalla "newuser", joka on syytä vaihtaa ensimmäisen kirjautumisen yhteydessä.
 
 #### Sensein muokkaaminen
 

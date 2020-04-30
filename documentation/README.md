@@ -36,6 +36,10 @@ Belts-, Senseis- ja Topics-taulut yhdistyvät Events-tauluun many–to–many-su
 
 ## Changelog
 
+### 30.4.2020
+
+Päivitetty aiheen kuvausta ja käyttötapausten kuvauksia, lisätty lisenssi.
+
 ### 29.4.2020
 
 Kustomoidut virhekoodit 404, 405 ja 500 on nyt implementoitu. Eventsin muokkaussivulla on autofill kaikkiin vanhoihin tietoihin (tyhjä kohta ei edelleen muuta aiempaa). Eventsin duplikointi on korjattu POST-metodiin aiemmasta GET-metodista. Debug-mode on otettu pois käytöstä.

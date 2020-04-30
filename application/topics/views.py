@@ -43,7 +43,7 @@ def topics_create():
     t = Topics(form.desc.data.lower().rstrip())
     db.session().add(t)
     db.session().commit()
-    flash("Master {} to earn black belt, topic added".format(t.desc))
+    flash("Master {} to earn the black belt, topic added".format(t.desc))
     return redirect(url_for("topics_index"))
 
 @app.route("/topics/<id>", methods=["POST"])
